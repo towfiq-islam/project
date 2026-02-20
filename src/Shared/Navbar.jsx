@@ -1,12 +1,22 @@
+"use client";
+import { useCart } from "@/Context/CartContext";
 import { Search, ShoppingCart, User } from "lucide-react";
+import Link from "next/link";
 
 const Navbar = () => {
+  const { items } = useCart();
+
   return (
     <header className="bg-white border-b border-gray-200 sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center gap-8">
-            <div className="text-xl font-bold">KICKS</div>
+            <Link
+              href="/"
+              className="text-xl font-bold hover:text-gray-600 transition-colors"
+            >
+              KICKS
+            </Link>
             <nav className="hidden md:flex gap-6">
               <a href="#" className="text-sm font-medium hover:text-gray-600">
                 New & Featured
@@ -35,9 +45,17 @@ const Navbar = () => {
             <button className="p-2 hover:bg-gray-100 rounded-full">
               <User className="w-5 h-5" />
             </button>
-            <button className="p-2 hover:bg-gray-100 rounded-full">
+            <Link
+              href="/cart"
+              className="p-2 hover:bg-gray-100 rounded-full relative transition-colors"
+            >
               <ShoppingCart className="w-5 h-5" />
-            </button>
+              {items.length > 0 && (
+                <span className="absolute top-1 right-1 bg-blue-600 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
+                  {items.length}
+                </span>
+              )}
+            </Link>
           </div>
         </div>
       </div>

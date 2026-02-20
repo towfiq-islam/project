@@ -1,5 +1,4 @@
 import { ArrowRight } from "lucide-react";
-import Image from "next/image";
 
 export function Categories() {
   return (
@@ -18,11 +17,9 @@ export function Categories() {
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div className="relative bg-gray-100 rounded-3xl overflow-hidden h-64 sm:h-80 group cursor-pointer">
-          <Image
-            fill
+          <img
             src="https://images.pexels.com/photos/2529148/pexels-photo-2529148.jpeg?auto=compress&cs=tinysrgb&w=600"
             alt="Lifestyle Shoes"
-            unoptimized
             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
@@ -38,9 +35,7 @@ export function Categories() {
         </div>
 
         <div className="relative bg-gray-100 rounded-3xl overflow-hidden h-64 sm:h-80 group cursor-pointer">
-          <Image
-            unoptimized
-            fill
+          <img
             src="https://images.pexels.com/photos/1456706/pexels-photo-1456706.jpeg?auto=compress&cs=tinysrgb&w=600"
             alt="Basketball Shoes"
             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"

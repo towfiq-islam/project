@@ -1,6 +1,6 @@
 import { Facebook, Twitter, Instagram, Youtube } from "lucide-react";
 
-const Footer = () => {
+export function Footer() {
   return (
     <footer className="bg-black text-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -109,6 +109,4 @@ const Footer = () => {
       </div>
     </footer>
   );
-};
-
-export default Footer;
+}

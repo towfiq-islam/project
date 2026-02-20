@@ -1,33 +1,45 @@
+"use client";
 import { ArrowRight } from "lucide-react";
-import Image from "next/image";
-const products = [
-  {
-    id: 1,
-    name: "ADIDAS 4DFWD X PARLEY RUNNING SHOES",
-    image:
-      "https://images.pexels.com/photos/1456706/pexels-photo-1456706.jpeg?auto=compress&cs=tinysrgb&w=400",
-  },
-  {
-    id: 2,
-    name: "ADIDAS 4DFWD X PARLEY RUNNING SHOES",
-    image:
-      "https://images.pexels.com/photos/2529148/pexels-photo-2529148.jpeg?auto=compress&cs=tinysrgb&w=400",
-  },
-  {
-    id: 3,
-    name: "ADIDAS 4DFWD X PARLEY RUNNING SHOES",
-    image:
-      "https://images.pexels.com/photos/1599012/pexels-photo-1599012.jpeg?auto=compress&cs=tinysrgb&w=400",
-  },
-  {
-    id: 4,
-    name: "ADIDAS 4DFWD X PARLEY RUNNING SHOES",
-    image:
-      "https://images.pexels.com/photos/1598508/pexels-photo-1598508.jpeg?auto=compress&cs=tinysrgb&w=400",
-  },
-];
+import { useState, useEffect } from "react";
+import { supabase } from "../../lib/supabase";
+import { useRouter } from "next/navigation";
 
 export function NewDrops() {
+  const navigate = useRouter();
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const loadProducts = async () => {
+      const { data } = await supabase
+        .from("products")
+        .select("id, name, price, image_urls")
+        .limit(4);
+
+      if (data) setProducts(data);
+      setLoading(false);
+    };
+
+    loadProducts();
+  }, []);
+
+  // useEffect(() => {
+  //   loadProducts();
+  // }, []);
+
+  // const loadProducts = async () => {
+  //   const { data } = await supabase
+  //     .from("products")
+  //     .select("id, name, price, image_urls")
+  //     .limit(4);
+  //   if (data) {
+  //     setProducts(data);
+  //   }
+  //   setLoading(false);
+  // };
+
+  if (loading) return null;
+
   return (
     <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
       <div className="flex items-center justify-between mb-6">
@@ -44,17 +56,21 @@ export function NewDrops() {
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         {products.map(product => (
           <div key={product.id} className="group">
-            <div className="bg-gray-100 rounded-2xl overflow-hidden mb-3 aspect-square relative">
-              <Image
-                fill
-                unoptimized
-                src={product.image}
+            <div className="bg-gray-100 rounded-2xl overflow-hidden mb-3 aspect-square">
+              <img
+                src={product.image_urls[0]}
                 alt={product.name}
                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
               />
             </div>
             <h3 className="font-medium text-sm mb-2">{product.name}</h3>
-            <button className="w-full bg-black text-white py-2.5 rounded-lg text-sm font-medium hover:bg-gray-800 transition-colors">
+            <p className="text-blue-600 font-bold text-sm mb-2">
+              ${product.price.toFixed(2)}
+            </p>
+            <button
+              onClick={() => navigate.push(`/product/${product.id}`)}
+              className="w-full bg-black text-white py-2.5 rounded-lg text-sm font-medium hover:bg-gray-800 transition-colors"
+            >
               View Product
             </button>
           </div>

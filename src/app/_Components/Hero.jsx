@@ -1,11 +1,19 @@
+"use client";
+import { useRouter } from "next/navigation";
+
 export function Hero() {
+  const navigate = useRouter();
+
   return (
     <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
       <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black mb-6">
         DO IT <span className="text-blue-600">RIGHT</span>
       </h1>
 
-      <div className="relative bg-gradient-to-br from-orange-400 to-amber-600 rounded-3xl overflow-hidden h-[400px] sm:h-[500px]">
+      <div
+        className="relative bg-gradient-to-br from-orange-400 to-amber-600 rounded-3xl overflow-hidden h-[400px] sm:h-[500px] cursor-pointer"
+        onClick={() => navigate.push("/product/0")}
+      >
         <img
           src="https://images.pexels.com/photos/2529148/pexels-photo-2529148.jpeg?auto=compress&cs=tinysrgb&w=1200"
           alt="Nike Air Max"
@@ -17,7 +25,7 @@ export function Hero() {
         <div className="absolute bottom-8 left-8 text-white">
           <h2 className="text-3xl sm:text-4xl font-bold mb-2">NIKE AIR MAX</h2>
           <p className="text-sm sm:text-base mb-4 max-w-md">
-            Nike introducing the new air max for everyones comfort
+            Nike introducing the new air max for everyone comfort
           </p>
           <button className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2.5 rounded-full font-medium transition-colors">
             Shop now

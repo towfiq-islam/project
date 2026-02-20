@@ -1,5 +1,4 @@
 import { ArrowRight } from "lucide-react";
-import Image from "next/image";
 
 const reviews = [
   {
@@ -55,10 +54,8 @@ export function Reviews() {
                 </div>
               </div>
             </div>
-            <div className="bg-gray-100 rounded-2xl overflow-hidden aspect-square relative">
-              <Image
-                unoptimized
-                fill
+            <div className="bg-gray-100 rounded-2xl overflow-hidden aspect-square">
+              <img
                 src={review.image}
                 alt={review.name}
                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"

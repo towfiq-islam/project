@@ -2,7 +2,8 @@ import { Poppins } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/Shared/Navbar";
 import QueryProvider from "@/Provider/QueryProvider/QueryProvider";
-import Footer from "@/Shared/Footer";
+import Providers from "@/Provider/providers";
+import { Footer } from "@/Shared/Footer";
 
 // Fonts
 const poppins = Poppins({
@@ -23,9 +24,11 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body className={`${poppins.variable} antialiased`}>
         <QueryProvider>
-          <Navbar />
-          {children}
-          <Footer />
+          <Providers>
+            <Navbar />
+            {children}
+            <Footer />
+          </Providers>
         </QueryProvider>
       </body>
     </html>
