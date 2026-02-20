@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { ChevronLeft, Heart, Share2, Check } from "lucide-react";
 import { useParams, useRouter } from "next/navigation";
 import { useCart } from "@/Context/CartContext";
-import { supabase } from "@/lib/supabase";
+import axiosInstance from "@/lib/axios";
 
 const relatedProducts = [
   {
@@ -36,66 +36,59 @@ const relatedProducts = [
   },
 ];
 
+const COLORS = [
+  { name: "Black", code: "#000000" },
+  { name: "White", code: "#ffffff" },
+  { name: "Red", code: "#ef4444" },
+];
+
+const SIZES = ["XS", "S", "M", "L", "XL"];
+
 export default function ProductDetailsPage() {
   const { id } = useParams();
-  const navigate = useRouter();
+  const router = useRouter();
   const { addItem } = useCart();
 
-  const [product, setProduct] = useState(null);
+  const [productDetails, setProductDetails] = useState(null);
   const [selectedImage, setSelectedImage] = useState(0);
   const [selectedColor, setSelectedColor] = useState(0);
   const [selectedSize, setSelectedSize] = useState("");
   const [quantity, setQuantity] = useState(1);
   const [loading, setLoading] = useState(true);
   const [added, setAdded] = useState(false);
+  console.log(productDetails);
 
+  // Data fetching
   useEffect(() => {
-    const loadProduct = async () => {
-      const { data, error } = await supabase
-        .from("products")
-        .select("*")
-        .eq("id", id)
-        .maybeSingle();
-
-      if (data) {
-        setProduct(data);
-        setSelectedSize(data.sizes[4]);
+    const fetchProductDetails = async () => {
+      try {
+        setLoading(true);
+        const { data } = await axiosInstance.get(`/products/${id}`);
+        setProductDetails(data);
+        setSelectedSize(SIZES[0]);
+        setSelectedImage(0);
+      } catch (error) {
+        console.error("Failed to fetch products:", error);
+      } finally {
+        setLoading(false);
       }
-      setLoading(false);
     };
 
-    loadProduct();
-  }, []);
+    fetchProductDetails();
+  }, [id]);
 
-  // useEffect(() => {
-  //   loadProduct();
-  // }, [id]);
-
-  // const loadProduct = async () => {
-  //   const { data, error } = await supabase
-  //     .from("products")
-  //     .select("*")
-  //     .eq("id", id)
-  //     .maybeSingle();
-
-  //   if (data) {
-  //     setProduct(data);
-  //     setSelectedSize(data.sizes[4]);
-  //   }
-  //   setLoading(false);
-  // };
 
   const handleAddToCart = () => {
-    if (!product || !selectedSize) return;
+    if (!productDetails || !selectedSize) return;
 
     const cartItem = {
-      id: `${product.id}-${Date.now()}`,
-      productId: product.id,
-      name: product.name,
-      price: product.price,
-      image: product.image_urls[0],
+      id: `${productDetails.id}-${Date.now()}`,
+      productId: productDetails.id,
+      name: productDetails.title,
+      price: productDetails.price,
+      image: productDetails.images?.[0],
       size: selectedSize,
-      color: product.colors[selectedColor]?.name || "Black",
+      color: COLORS[selectedColor]?.name,
       quantity,
     };
 
@@ -103,7 +96,6 @@ export default function ProductDetailsPage() {
     setAdded(true);
     setTimeout(() => setAdded(false), 2000);
   };
-
   if (loading) {
     return (
       <div className="min-h-screen bg-white flex items-center justify-center">
@@ -112,13 +104,13 @@ export default function ProductDetailsPage() {
     );
   }
 
-  if (!product) {
+  if (!productDetails) {
     return (
       <div className="min-h-screen bg-white flex items-center justify-center">
         <div className="text-center">
           <div className="text-gray-500 mb-4">Product not found</div>
           <button
-            onClick={() => navigate.push("/")}
+            onClick={() => router.push("/")}
             className="text-blue-600 hover:text-blue-700"
           >
             Back to home
@@ -132,7 +124,7 @@ export default function ProductDetailsPage() {
     <div className="min-h-screen bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
         <button
-          onClick={() => navigate.push("/")}
+          onClick={() => router.push("/")}
           className="flex items-center gap-2 text-gray-600 hover:text-gray-900 mb-6"
         >
           <ChevronLeft className="w-5 h-5" />
@@ -143,14 +135,14 @@ export default function ProductDetailsPage() {
           <div>
             <div className="bg-gray-100 rounded-2xl aspect-square mb-4 overflow-hidden">
               <img
-                src={product.image_urls[selectedImage]}
-                alt={product.name}
+                src={productDetails?.images?.[selectedImage]}
+                alt={productDetails?.title}
                 className="w-full h-full object-cover"
               />
             </div>
 
             <div className="grid grid-cols-4 gap-2">
-              {product.image_urls.map((image, idx) => (
+              {productDetails?.images?.map((image, idx) => (
                 <button
                   key={idx}
                   onClick={() => setSelectedImage(idx)}
@@ -162,7 +154,7 @@ export default function ProductDetailsPage() {
                 >
                   <img
                     src={image}
-                    alt={`View ${idx + 1}`}
+                    alt={`${productDetails?.title} image ${idx + 1}`}
                     className="w-full h-full object-cover"
                   />
                 </button>
@@ -172,10 +164,10 @@ export default function ProductDetailsPage() {
 
           <div>
             <h1 className="text-2xl sm:text-3xl font-bold mb-2">
-              {product.name}
+              {productDetails?.title}
             </h1>
             <p className="text-blue-600 text-xl font-bold mb-4">
-              ${product.price.toFixed(2)}
+              ${productDetails?.price?.toFixed(2)}
             </p>
 
             <div className="flex items-center gap-2 mb-6">
@@ -192,7 +184,7 @@ export default function ProductDetailsPage() {
             <div className="mb-6">
               <h3 className="font-medium mb-3">Color</h3>
               <div className="flex gap-3">
-                {product.colors.map((color, idx) => (
+                {COLORS.map((color, idx) => (
                   <button
                     key={idx}
                     onClick={() => setSelectedColor(idx)}
@@ -211,7 +203,7 @@ export default function ProductDetailsPage() {
             <div className="mb-6">
               <h3 className="font-medium mb-3">Size</h3>
               <div className="grid grid-cols-4 gap-2">
-                {product.sizes.map(size => (
+                {SIZES.map(size => (
                   <button
                     key={size}
                     onClick={() => setSelectedSize(size)}
@@ -281,7 +273,9 @@ export default function ProductDetailsPage() {
 
             <div className="bg-gray-50 p-4 rounded-lg mb-6">
               <h3 className="font-medium mb-2">About the product</h3>
-              <p className="text-sm text-gray-600">{product.description}</p>
+              <p className="text-sm text-gray-600">
+                {productDetails?.description}
+              </p>
             </div>
 
             <div className="space-y-3 text-sm">
@@ -303,7 +297,7 @@ export default function ProductDetailsPage() {
             {relatedProducts.map(relProduct => (
               <button
                 key={relProduct.id}
-                onClick={() => navigate.push(`/product/${relProduct.id}`)}
+                onClick={() => router.push(`/product/${relProduct.id}`)}
                 className="group text-left"
               >
                 <div className="bg-gray-100 rounded-2xl overflow-hidden mb-3 aspect-square">

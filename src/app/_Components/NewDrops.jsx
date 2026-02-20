@@ -1,44 +1,31 @@
 "use client";
+import Image from "next/image";
 import { ArrowRight } from "lucide-react";
 import { useState, useEffect } from "react";
-import { supabase } from "../../lib/supabase";
-import { useRouter } from "next/navigation";
+import ProductSkeleton from "@/Components/Loader/Loader";
+import Link from "next/link";
+import axiosInstance from "@/lib/axios";
 
 export function NewDrops() {
-  const navigate = useRouter();
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  // Data fetching
   useEffect(() => {
-    const loadProducts = async () => {
-      const { data } = await supabase
-        .from("products")
-        .select("id, name, price, image_urls")
-        .limit(4);
-
-      if (data) setProducts(data);
-      setLoading(false);
+    const fetchProducts = async () => {
+      try {
+        setLoading(true);
+        const { data } = await axiosInstance.get("/products");
+        setProducts(data);
+      } catch (error) {
+        console.error("Failed to fetch products:", error);
+      } finally {
+        setLoading(false);
+      }
     };
 
-    loadProducts();
+    fetchProducts();
   }, []);
-
-  // useEffect(() => {
-  //   loadProducts();
-  // }, []);
-
-  // const loadProducts = async () => {
-  //   const { data } = await supabase
-  //     .from("products")
-  //     .select("id, name, price, image_urls")
-  //     .limit(4);
-  //   if (data) {
-  //     setProducts(data);
-  //   }
-  //   setLoading(false);
-  // };
-
-  if (loading) return null;
 
   return (
     <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -54,27 +41,38 @@ export function NewDrops() {
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        {products.map(product => (
-          <div key={product.id} className="group">
-            <div className="bg-gray-100 rounded-2xl overflow-hidden mb-3 aspect-square">
-              <img
-                src={product.image_urls[0]}
-                alt={product.name}
-                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-              />
-            </div>
-            <h3 className="font-medium text-sm mb-2">{product.name}</h3>
-            <p className="text-blue-600 font-bold text-sm mb-2">
-              ${product.price.toFixed(2)}
-            </p>
-            <button
-              onClick={() => navigate.push(`/product/${product.id}`)}
-              className="w-full bg-black text-white py-2.5 rounded-lg text-sm font-medium hover:bg-gray-800 transition-colors"
-            >
-              View Product
-            </button>
-          </div>
-        ))}
+        {loading
+          ? Array.from({ length: 4 })?.map((_, idx) => (
+              <ProductSkeleton key={idx} />
+            ))
+          : products?.map(product => (
+              <div key={product?.id} className="group">
+                <div className="bg-gray-100 rounded-2xl overflow-hidden mb-3 aspect-square relative">
+                  <Image
+                    fill
+                    unoptimized
+                    src={product?.images[0]}
+                    alt={product?.title}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                  />
+                </div>
+
+                <h3 className="font-medium text-sm mb-2 truncate">
+                  {product.title}
+                </h3>
+
+                <p className="text-blue-600 font-bold text-sm mb-2">
+                  ${product?.price.toFixed(2)}
+                </p>
+
+                <Link
+                  href={`/product/${product?.id}`}
+                  className="w-full bg-black text-white py-2.5 rounded-lg text-sm font-medium hover:bg-gray-800 transition-colors block text-center"
+                >
+                  View Product
+                </Link>
+              </div>
+            ))}
       </div>
     </section>
   );
