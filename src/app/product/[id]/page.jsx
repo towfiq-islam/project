@@ -49,7 +49,7 @@ export default function ProductDetailsPage() {
     fetchProductDetails();
   }, [id]);
 
-  // Data fetching
+  // Data fetching for related products
   useEffect(() => {
     const fetchRelatedProducts = async () => {
       try {
@@ -84,6 +84,7 @@ export default function ProductDetailsPage() {
     setAdded(true);
     setTimeout(() => setAdded(false), 2000);
   };
+  
   if (loading) {
     return (
       <div className="min-h-screen bg-white flex items-center justify-center">

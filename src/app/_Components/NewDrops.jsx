@@ -10,23 +10,29 @@ export function NewDrops() {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(1);
+  const [isLastPage, setIsLastPage] = useState(false);
   const limit = 4;
 
-  // Data fetching
+  const totalVisible = 5; // max visible page numbers
+
+  // Fetch products
   useEffect(() => {
     const fetchProducts = async () => {
       try {
         setLoading(true);
-
         const offset = (page - 1) * limit;
-
         const { data } = await axiosInstance.get(
           `/products?offset=${offset}&limit=${limit}`,
         );
 
-        setProducts(data);
+        setProducts(data || []);
+
+        // Fix: mark last page if fewer products returned than limit
+        setIsLastPage(!data || data.length < limit);
       } catch (error) {
         console.error("Failed to fetch products:", error);
+        setProducts([]);
+        setIsLastPage(true); // treat as last page if fetch fails
       } finally {
         setLoading(false);
       }
@@ -34,6 +40,13 @@ export function NewDrops() {
 
     fetchProducts();
   }, [page]);
+
+  const startPage = Math.max(1, page - Math.floor(totalVisible / 2));
+  const visiblePages = isLastPage ? page : startPage + totalVisible - 1;
+  const pages = Array.from(
+    { length: Math.min(totalVisible, visiblePages - startPage + 1) },
+    (_, i) => startPage + i,
+  );
 
   return (
     <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -50,31 +63,28 @@ export function NewDrops() {
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         {loading
-          ? Array.from({ length: 4 })?.map((_, idx) => (
+          ? Array.from({ length: limit }).map((_, idx) => (
               <ProductSkeleton key={idx} />
             ))
-          : products?.map(product => (
-              <div key={product?.id} className="group">
+          : products.map(product => (
+              <div key={product.id} className="group">
                 <div className="bg-gray-100 rounded-2xl overflow-hidden mb-3 aspect-square relative">
                   <Image
                     fill
                     unoptimized
-                    src={product?.images[0]}
-                    alt={product?.title}
+                    src={product.images[0]}
+                    alt={product.title}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                   />
                 </div>
-
                 <h3 className="font-medium text-sm mb-2 truncate">
                   {product.title}
                 </h3>
-
                 <p className="text-blue-600 font-bold text-sm mb-2">
-                  ${product?.price?.toFixed(2)}
+                  ${product.price.toFixed(2)}
                 </p>
-
                 <Link
-                  href={`/product/${product?.id}`}
+                  href={`/product/${product.id}`}
                   className="w-full bg-black text-white py-2.5 rounded-lg text-sm font-medium hover:bg-gray-800 transition-colors block text-center"
                 >
                   View Product
@@ -84,21 +94,36 @@ export function NewDrops() {
       </div>
 
       {/* Pagination */}
-      <div className="flex justify-center mt-8 gap-3">
+      <div className="flex justify-center items-center mt-8 gap-2 flex-wrap">
+        {/* Prev Button */}
         <button
           disabled={page === 1}
           onClick={() => setPage(prev => prev - 1)}
-          className="px-4 py-2 bg-gray-200 rounded disabled:opacity-50"
+          className="px-3 py-2 bg-gray-200 rounded disabled:opacity-50 cursor-pointer"
         >
           Prev
         </button>
 
-        <span className="px-4 py-2 font-semibold">Page {page}</span>
+        {/* Page Numbers */}
+        {pages?.map(p => (
+          <button
+            key={p}
+            onClick={() => setPage(p)}
+            className={`px-3 py-2 rounded cursor-pointer ${
+              page === p
+                ? "bg-black text-white"
+                : "bg-gray-200 hover:bg-gray-300"
+            }`}
+          >
+            {p}
+          </button>
+        ))}
 
+        {/* Next Button */}
         <button
-          disabled={products.length < limit}
+          disabled={isLastPage} // disables if last page
           onClick={() => setPage(prev => prev + 1)}
-          className="px-4 py-2 bg-gray-200 rounded disabled:opacity-50"
+          className="px-3 py-2 bg-gray-200 rounded disabled:opacity-50 cursor-pointer"
         >
           Next
         </button>
