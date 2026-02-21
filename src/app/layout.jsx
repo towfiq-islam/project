@@ -1,8 +1,8 @@
 import { Poppins } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/Shared/Navbar";
-import Providers from "@/Provider/Providers";
 import { Footer } from "@/Shared/Footer";
+import Provider from "@/Provider/Provider";
 
 // Fonts
 const poppins = Poppins({
@@ -22,11 +22,11 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={`${poppins.variable} antialiased`}>
-          <Providers>
-            <Navbar />
-            {children}
-            <Footer />
-          </Providers>
+        <Provider>
+          <Navbar />
+          {children}
+          <Footer />
+        </Provider>
       </body>
     </html>
   );
