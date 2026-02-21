@@ -1,7 +1,7 @@
 import { Poppins } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/Shared/Navbar";
-import Providers from "@/Provider/providers";
+import Providers from "@/Provider/Providers";
 import { Footer } from "@/Shared/Footer";
 
 // Fonts

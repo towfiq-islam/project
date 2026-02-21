@@ -5,6 +5,7 @@ import { useParams, useRouter } from "next/navigation";
 import { useCart } from "@/Context/CartContext";
 import axiosInstance from "@/lib/axios";
 import Link from "next/link";
+import RelatedProducts from "../_Components/RelatedProducts";
 
 const COLORS = [
   { name: "Black", code: "#000000" },
@@ -84,7 +85,7 @@ export default function ProductDetailsPage() {
     setAdded(true);
     setTimeout(() => setAdded(false), 2000);
   };
-  
+
   if (loading) {
     return (
       <div className="min-h-screen bg-white flex items-center justify-center">
@@ -282,32 +283,7 @@ export default function ProductDetailsPage() {
 
         <div className="border-t pt-12">
           <h2 className="text-2xl font-bold mb-6">You may also like</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            {relatedProducts?.map(relProduct => (
-              <div key={relProduct?.id} className="group text-left">
-                <div className="bg-gray-100 rounded-2xl overflow-hidden mb-3 aspect-square">
-                  <img
-                    src={relProduct?.images[0]}
-                    alt={relProduct?.title}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                  />
-                </div>
-
-                <h3 className="font-medium text-sm mb-2">
-                  {relProduct?.title}
-                </h3>
-
-                <p className="text-blue-600 font-bold">${relProduct?.price}</p>
-
-                <Link
-                  href={`/product/${relProduct?.id}`}
-                  className="w-full bg-black text-white py-2.5 rounded-lg text-sm font-medium hover:bg-gray-800 transition-colors mt-3 block text-center"
-                >
-                  View Product
-                </Link>
-              </div>
-            ))}
-          </div>
+          <RelatedProducts products={relatedProducts} />
         </div>
       </div>
     </div>
