@@ -30,3 +30,16 @@ body {
 .section_description {
   @apply text-base;
 }
+
+.swiper-pagination-bullet-active-main,
+.swiper-pagination-bullet-active-prev,
+.swiper-pagination-bullet-active-next {
+  @apply !text-blue-500 !p-2;
+}
+
+:is(
+  .swiper-horizontal > .swiper-pagination-bullets,
+  .swiper-pagination-horizontal.swiper-pagination-bullets
+).swiper-pagination-bullets-dynamic {
+  width: 100px !important;
+}

@@ -78,6 +78,7 @@ const RelatedProducts = ({ relatedProducts }) => {
             1024: { slidesPerView: 3, spaceBetween: 20 },
             1536: { slidesPerView: 4, spaceBetween: 30 },
           }}
+          className="!pb-10"
         >
           {relatedProducts?.map(relProduct => (
             <SwiperSlide key={relProduct?.id}>
