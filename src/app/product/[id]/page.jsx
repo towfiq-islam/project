@@ -4,37 +4,7 @@ import { ChevronLeft, Heart, Share2, Check } from "lucide-react";
 import { useParams, useRouter } from "next/navigation";
 import { useCart } from "@/Context/CartContext";
 import axiosInstance from "@/lib/axios";
-
-const relatedProducts = [
-  {
-    id: "2",
-    name: "ADIDAS 4DFWD X PARLEY",
-    price: 175,
-    image:
-      "https://images.pexels.com/photos/1456706/pexels-photo-1456706.jpeg?auto=compress&cs=tinysrgb&w=400",
-  },
-  {
-    id: "3",
-    name: "ADIDAS 4DFWD X PARLEY",
-    price: 175,
-    image:
-      "https://images.pexels.com/photos/1599012/pexels-photo-1599012.jpeg?auto=compress&cs=tinysrgb&w=400",
-  },
-  {
-    id: "4",
-    name: "ADIDAS 4DFWD X PARLEY",
-    price: 175,
-    image:
-      "https://images.pexels.com/photos/1598508/pexels-photo-1598508.jpeg?auto=compress&cs=tinysrgb&w=400",
-  },
-  {
-    id: "1",
-    name: "ADIDAS 4DFWD X PARLEY",
-    price: 175,
-    image:
-      "https://images.pexels.com/photos/2529148/pexels-photo-2529148.jpeg?auto=compress&cs=tinysrgb&w=400",
-  },
-];
+import Link from "next/link";
 
 const COLORS = [
   { name: "Black", code: "#000000" },
@@ -50,13 +20,15 @@ export default function ProductDetailsPage() {
   const { addItem } = useCart();
 
   const [productDetails, setProductDetails] = useState(null);
+  const [relatedProducts, setRelatedProducts] = useState([]);
+
   const [selectedImage, setSelectedImage] = useState(0);
   const [selectedColor, setSelectedColor] = useState(0);
   const [selectedSize, setSelectedSize] = useState("");
   const [quantity, setQuantity] = useState(1);
   const [loading, setLoading] = useState(true);
+  const [relatedProductLoading, setRelatedProductLoading] = useState(true);
   const [added, setAdded] = useState(false);
-  console.log(productDetails);
 
   // Data fetching
   useEffect(() => {
@@ -77,6 +49,22 @@ export default function ProductDetailsPage() {
     fetchProductDetails();
   }, [id]);
 
+  // Data fetching
+  useEffect(() => {
+    const fetchRelatedProducts = async () => {
+      try {
+        setRelatedProductLoading(true);
+        const { data } = await axiosInstance.get(`/products/${id}/related`);
+        setRelatedProducts(data);
+      } catch (error) {
+        console.error("Failed to fetch products:", error);
+      } finally {
+        setRelatedProductLoading(false);
+      }
+    };
+
+    fetchRelatedProducts();
+  }, [id]);
 
   const handleAddToCart = () => {
     if (!productDetails || !selectedSize) return;
@@ -294,25 +282,29 @@ export default function ProductDetailsPage() {
         <div className="border-t pt-12">
           <h2 className="text-2xl font-bold mb-6">You may also like</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            {relatedProducts.map(relProduct => (
-              <button
-                key={relProduct.id}
-                onClick={() => router.push(`/product/${relProduct.id}`)}
-                className="group text-left"
-              >
+            {relatedProducts?.map(relProduct => (
+              <div key={relProduct?.id} className="group text-left">
                 <div className="bg-gray-100 rounded-2xl overflow-hidden mb-3 aspect-square">
                   <img
-                    src={relProduct.image}
-                    alt={relProduct.name}
+                    src={relProduct?.images[0]}
+                    alt={relProduct?.title}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                   />
                 </div>
-                <h3 className="font-medium text-sm mb-2">{relProduct.name}</h3>
-                <p className="text-blue-600 font-bold">${relProduct.price}</p>
-                <button className="w-full bg-black text-white py-2.5 rounded-lg text-sm font-medium hover:bg-gray-800 transition-colors mt-3">
+
+                <h3 className="font-medium text-sm mb-2">
+                  {relProduct?.title}
+                </h3>
+
+                <p className="text-blue-600 font-bold">${relProduct?.price}</p>
+
+                <Link
+                  href={`/product/${relProduct?.id}`}
+                  className="w-full bg-black text-white py-2.5 rounded-lg text-sm font-medium hover:bg-gray-800 transition-colors mt-3 block text-center"
+                >
                   View Product
-                </button>
-              </button>
+                </Link>
+              </div>
             ))}
           </div>
         </div>

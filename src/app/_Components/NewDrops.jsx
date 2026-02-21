@@ -9,13 +9,21 @@ import axiosInstance from "@/lib/axios";
 export function NewDrops() {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [page, setPage] = useState(1);
+  const limit = 4;
 
   // Data fetching
   useEffect(() => {
     const fetchProducts = async () => {
       try {
         setLoading(true);
-        const { data } = await axiosInstance.get("/products");
+
+        const offset = (page - 1) * limit;
+
+        const { data } = await axiosInstance.get(
+          `/products?offset=${offset}&limit=${limit}`,
+        );
+
         setProducts(data);
       } catch (error) {
         console.error("Failed to fetch products:", error);
@@ -25,7 +33,7 @@ export function NewDrops() {
     };
 
     fetchProducts();
-  }, []);
+  }, [page]);
 
   return (
     <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -62,7 +70,7 @@ export function NewDrops() {
                 </h3>
 
                 <p className="text-blue-600 font-bold text-sm mb-2">
-                  ${product?.price.toFixed(2)}
+                  ${product?.price?.toFixed(2)}
                 </p>
 
                 <Link
@@ -73,6 +81,27 @@ export function NewDrops() {
                 </Link>
               </div>
             ))}
+      </div>
+
+      {/* Pagination */}
+      <div className="flex justify-center mt-8 gap-3">
+        <button
+          disabled={page === 1}
+          onClick={() => setPage(prev => prev - 1)}
+          className="px-4 py-2 bg-gray-200 rounded disabled:opacity-50"
+        >
+          Prev
+        </button>
+
+        <span className="px-4 py-2 font-semibold">Page {page}</span>
+
+        <button
+          disabled={products.length < limit}
+          onClick={() => setPage(prev => prev + 1)}
+          className="px-4 py-2 bg-gray-200 rounded disabled:opacity-50"
+        >
+          Next
+        </button>
       </div>
     </section>
   );
