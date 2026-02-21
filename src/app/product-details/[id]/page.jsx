@@ -4,7 +4,6 @@ import { ChevronLeft, Heart, Share2, Check } from "lucide-react";
 import { useParams, useRouter } from "next/navigation";
 import { useCart } from "@/Context/CartContext";
 import axiosInstance from "@/lib/axios";
-import Link from "next/link";
 import RelatedProducts from "../_Components/RelatedProducts";
 
 const COLORS = [
@@ -114,8 +113,8 @@ export default function ProductDetailsPage() {
     <div className="min-h-screen bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
         <button
-          onClick={() => router.push("/")}
-          className="flex items-center gap-2 text-gray-600 hover:text-gray-900 mb-6"
+          onClick={() => router.back()}
+          className="flex items-center gap-2 cursor-pointer text-gray-600 hover:text-gray-900 mb-6"
         >
           <ChevronLeft className="w-5 h-5" />
           Back to home
@@ -283,7 +282,7 @@ export default function ProductDetailsPage() {
 
         <div className="border-t pt-12">
           <h2 className="text-2xl font-bold mb-6">You may also like</h2>
-          <RelatedProducts products={relatedProducts} />
+          <RelatedProducts relatedProducts={relatedProducts} />
         </div>
       </div>
     </div>

@@ -1,10 +1,9 @@
 "use client";
-import Image from "next/image";
 import { ArrowRight } from "lucide-react";
 import { useState, useEffect } from "react";
 import ProductSkeleton from "@/Components/Loader/Loader";
-import Link from "next/link";
 import axiosInstance from "@/lib/axios";
+import Product from "@/Components/Common/Product";
 
 export function NewDrops() {
   const [products, setProducts] = useState([]);
@@ -67,29 +66,7 @@ export function NewDrops() {
               <ProductSkeleton key={idx} />
             ))
           : products.map(product => (
-              <div key={product.id} className="group">
-                <div className="bg-gray-100 rounded-2xl overflow-hidden mb-3 aspect-square relative">
-                  <Image
-                    fill
-                    unoptimized
-                    src={product.images[0]}
-                    alt={product.title}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                  />
-                </div>
-                <h3 className="font-medium text-sm mb-2 truncate">
-                  {product.title}
-                </h3>
-                <p className="text-blue-600 font-bold text-sm mb-2">
-                  ${product.price.toFixed(2)}
-                </p>
-                <Link
-                  href={`/product/${product.id}`}
-                  className="w-full bg-black text-white py-2.5 rounded-lg text-sm font-medium hover:bg-gray-800 transition-colors block text-center"
-                >
-                  View Product
-                </Link>
-              </div>
+              <Product key={product?.id} product={product} />
             ))}
       </div>
 

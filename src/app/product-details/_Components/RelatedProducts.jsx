@@ -8,8 +8,9 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 
 import { ArrowRight } from "lucide-react";
+import Product from "@/Components/Common/Product";
 
-const RelatedProducts = ({ products }) => {
+const RelatedProducts = ({ relatedProducts }) => {
   const prevRef = useRef(null);
   const nextRef = useRef(null);
   const [swiperInstance, setSwiperInstance] = useState(null);
@@ -78,29 +79,9 @@ const RelatedProducts = ({ products }) => {
             1536: { slidesPerView: 4, spaceBetween: 30 },
           }}
         >
-          {products?.map(relProduct => (
+          {relatedProducts?.map(relProduct => (
             <SwiperSlide key={relProduct?.id}>
-              <div className="group text-left">
-                <div className="bg-gray-100 rounded-2xl overflow-hidden mb-3 aspect-square">
-                  <img
-                    src={relProduct?.images[0]}
-                    alt={relProduct?.title}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                  />
-                </div>
-
-                <h3 className="font-medium text-sm mb-2">
-                  {relProduct?.title}
-                </h3>
-                <p className="text-blue-600 font-bold">${relProduct?.price}</p>
-
-                <Link
-                  href={`/product/${relProduct?.id}`}
-                  className="w-full bg-black text-white py-2.5 rounded-lg text-sm font-medium hover:bg-gray-800 transition-colors mt-3 block text-center"
-                >
-                  View Product
-                </Link>
-              </div>
+              <Product product={relProduct} />
             </SwiperSlide>
           ))}
         </Swiper>
