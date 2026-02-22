@@ -5,15 +5,15 @@ import Image from "next/image";
 export function Footer() {
   return (
     <footer className="container mx-auto px-4 sm:px-6 lg:px-8 mb-5">
-      <div className="bg-secondary-black text-white rounded-3xl pt-16 px-8 sm:px-16 relative overflow-hidden -mt-10">
+      <div className="bg-secondary-black text-white rounded-3xl pt-5 lg:pt-16 px-5 sm:px-16 relative overflow-hidden -mt-10">
         {/* Grid Content */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 relative z-10">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-7 lg:gap-10 relative z-10">
           {/* About */}
           <div>
-            <h3 className="text-xl font-medium text-[#ffa52f] mb-5">
+            <h3 className="text-xl font-medium text-[#ffa52f] mb-1 lg:mb-5">
               About us
             </h3>
-            <p className="text-sm text-gray-200 leading-relaxed">
+            <p className="text-[15px] text-gray-200 leading-relaxed">
               We are the biggest hyperstore in the universe. We got you all
               covered with our exclusive collections and latest drops.
             </p>
@@ -21,10 +21,10 @@ export function Footer() {
 
           {/* Categories */}
           <div>
-            <h3 className="text-xl font-medium text-[#ffa52f] mb-5">
+            <h3 className="text-xl font-medium text-[#ffa52f] mb-1 lg:mb-5">
               Categories
             </h3>
-            <ul className="space-y-2 text-sm text-gray-200">
+            <ul className="space-y-2 text-[15px] text-gray-200">
               {[
                 "Runners",
                 "Sneakers",
@@ -44,8 +44,10 @@ export function Footer() {
 
           {/* Company */}
           <div>
-            <h3 className="text-xl font-medium text-[#ffa52f] mb-5">Company</h3>
-            <ul className="space-y-2 text-sm text-gray-200">
+            <h3 className="text-xl font-medium text-[#ffa52f] mb-1 lg:mb-5">
+              Company
+            </h3>
+            <ul className="space-y-2 text-[15px] text-gray-200">
               {["About", "Contact", "Blogs"].map(item => (
                 <li key={item}>
                   <a href="#" className="hover:text-white transition-colors">
@@ -58,7 +60,7 @@ export function Footer() {
 
           {/* Social */}
           <div>
-            <h3 className="text-xl font-medium text-[#ffa52f] mb-5">
+            <h3 className="text-xl font-medium text-[#ffa52f] mb-1 lg:mb-5">
               Follow us
             </h3>
             <div className="flex gap-3.5">
@@ -79,7 +81,7 @@ export function Footer() {
         </div>
 
         {/* Big Background */}
-        <div className="pt-20">
+        <div className="pt-10 lg:pt-20">
           <Image
             src={kickImg}
             alt="kick_img"

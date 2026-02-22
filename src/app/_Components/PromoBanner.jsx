@@ -3,20 +3,20 @@ import Image from "next/image";
 
 export function PromoBanner() {
   return (
-    <section className="container mx-auto px-4 sm:px-6 lg:px-8 mt-8">
-      <div className="bg-primary-blue rounded-3xl px-8 sm:px-16 pt-14 pb-20 relative overflow-hidden">
+    <section className="container mx-auto px-4 sm:px-6 lg:px-8 mt-5 lg:mt-8">
+      <div className="bg-primary-blue rounded-3xl px-10 sm:px-16 pt-5 lg:pt-14 pb-20 relative overflow-hidden">
         <div className="flex flex-col lg:flex-row justify-between items-center gap-10">
           {/* Left Content */}
           <div className="text-gray-50 max-w-xl">
-            <h2 className="text-4xl sm:text-5xl font-semibold leading-tight">
+            <h2 className="text-3xl sm:text-5xl font-semibold leading-tight">
               JOIN OUR KICKSPLUS
             </h2>
 
-            <h3 className="text-4xl sm:text-5xl font-bold mb-4">
+            <h3 className="text-3xl sm:text-5xl font-bold mb-2 lg:mb-4">
               CLUB & GET 15% OFF
             </h3>
 
-            <p className="text-sm sm:text-[17px] mb-6 text-blue-100">
+            <p className="text-[17px] mb-6 text-blue-100">
               Sign up for free! Join the community.
             </p>
 
@@ -35,7 +35,7 @@ export function PromoBanner() {
           </div>
 
           {/* Right Big Logo */}
-          <div className="text-white text-6xl sm:text-7xl lg:text-8xl font-black tracking-tighter">
+          <div>
             <Image
               src={kickImg}
               alt="kick_img"

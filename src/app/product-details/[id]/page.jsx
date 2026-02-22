@@ -1,14 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
-import {
-  ChevronLeft,
-  Heart,
-  Share2,
-  Check,
-  ChevronRight,
-  X,
-  ZoomIn,
-} from "lucide-react";
+import { ChevronLeft, Heart, Check, ChevronRight, ZoomIn } from "lucide-react";
 import { useParams, useRouter } from "next/navigation";
 import { useCart } from "@/Context/CartContext";
 import axiosInstance from "@/lib/axios";
@@ -103,11 +95,11 @@ export default function ProductDetailsPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-[#F5F5F0] flex items-center justify-center">
-        <div className="flex flex-col items-center gap-3">
-          <div className="w-8 h-8 border-2 border-black border-t-transparent rounded-full animate-spin" />
-          <p className="text-sm text-gray-500 tracking-widest uppercase">
-            Loading
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <div className="flex flex-col items-center gap-4">
+          <div className="w-10 h-10 border-4 border-primary-blue border-t-transparent rounded-full animate-spin" />
+          <p className="text-sm text-secondary-black tracking-[0.2em] uppercase font-medium">
+            Loading...
           </p>
         </div>
       </div>
@@ -139,14 +131,14 @@ export default function ProductDetailsPage() {
           {/* Back button */}
           <button
             onClick={() => router.back()}
-            className="flex items-center gap-1.5 text-sm text-gray-600 hover:text-black mb-6 transition-colors"
+            className="flex items-center gap-1.5 text-sm text-gray-600 hover:text-black transition-colors my-3 lg:my-5 cursor-pointer"
           >
             <ChevronLeft className="w-4 h-4" />
             <span>Back to home</span>
           </button>
 
           {/* Main layout */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16 lg:items-start">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-5 lg:mb-16 lg:items-start">
             {/* ===== LEFT: IMAGES ===== */}
 
             {/* Desktop: 2x2 grid */}
@@ -238,16 +230,17 @@ export default function ProductDetailsPage() {
             <div className="flex flex-col gap-5">
               {/* Badge */}
               <div>
-                <span className="inline-block bg-blue-600 text-white text-xs font-semibold px-3 py-1 rounded-full tracking-wide uppercase">
+                <span className="inline-block bg-primary-blue text-white text-xs font-semibold px-3 py-1.5 rounded-lg tracking-wide uppercase">
                   New Release
                 </span>
               </div>
 
               {/* Title & Price */}
               <div>
-                <h1 className="text-2xl sm:text-3xl font-extrabold text-black leading-tight tracking-tight uppercase mb-2">
+                <h2 className="text-2xl sm:text-3xl font-extrabold text-secondary-black leading-tight tracking-tight uppercase mb-2">
                   {productDetails?.title}
-                </h1>
+                </h2>
+
                 <p className="text-2xl font-bold text-black">
                   ${productDetails?.price?.toFixed(2)}
                 </p>
@@ -318,7 +311,7 @@ export default function ProductDetailsPage() {
                     className={`flex-1 cursor-pointer py-3.5 rounded-xl font-bold text-sm tracking-widest uppercase transition-all flex items-center justify-center gap-2 ${
                       added
                         ? "bg-green-600 text-white"
-                        : "bg-black text-white hover:bg-gray-800 active:scale-[0.98]"
+                        : "bg-secondary-black text-white hover:bg-black active:scale-[0.98]"
                     }`}
                   >
                     {added ? (
@@ -345,18 +338,18 @@ export default function ProductDetailsPage() {
                   </button>
                 </div>
 
-                <button className="w-full cursor-pointer bg-[#4F46E5] hover:bg-[#4338CA] text-white py-3.5 rounded-xl font-bold text-sm tracking-widest uppercase transition-all active:scale-[0.98]">
+                <button className="w-full cursor-pointer bg-primary-blue text-white py-3.5 rounded-xl font-bold text-sm tracking-widest uppercase transition-all active:scale-[0.98]">
                   Buy It Now
                 </button>
               </div>
 
               {/* About */}
               <div>
-                <h3 className="font-bold text-sm uppercase tracking-wider mb-3">
+                <h3 className="font-bold text-[15px] uppercase tracking-wider mb-2 lg:mb-3">
                   About the Product
                 </h3>
 
-                <p className="text-sm text-gray-600 leading-relaxed mb-4">
+                <p className="text-[15px] text-gray-600 leading-relaxed lg:mb-4">
                   {productDetails?.description}
                 </p>
               </div>
@@ -368,6 +361,7 @@ export default function ProductDetailsPage() {
             <h2 className="text-xl font-bold uppercase tracking-wider mb-6">
               You May Also Like
             </h2>
+
             <RelatedProducts relatedProducts={relatedProducts} />
           </div>
         </div>

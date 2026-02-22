@@ -8,14 +8,6 @@
 
   /* Font Family */
   --font-rubik: var(--font-rubik);
-
-  /* Breakpoints */
-  --breakpoint-sm: 480px;
-  --breakpoint-md: 576px;
-  --breakpoint-lg: 768px;
-  --breakpoint-xl: 1024px;
-  --breakpoint-2xl: 1280px;
-  --breakpoint-3xl: 1536px;
 }
 
 body {
@@ -35,7 +27,7 @@ body {
 .swiper-pagination-bullet-active-main,
 .swiper-pagination-bullet-active-prev,
 .swiper-pagination-bullet-active-next {
-  @apply !text-blue-500 !p-2;
+  @apply !text-primary-blue !p-2;
 }
 
 :is(

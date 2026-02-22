@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import ProductSkeleton from "@/Components/Loader/Loader";
 import axiosInstance from "@/lib/axios";
 import Product from "@/Components/Common/Product";
+import Button from "@/Components/Common/Button";
 
 export function NewDrops() {
   const [products, setProducts] = useState([]);
@@ -47,19 +48,17 @@ export function NewDrops() {
 
   return (
     <section className="container mx-auto px-4 sm:px-6 lg:px-8 pb-8">
-      <div className="flex items-end justify-between mb-8">
-        <h2 className="text-[26px] sm:text-5xl capitalize font-semibold tracking-[0.5px]">
+      <div className="flex items-center lg:items-end justify-between mb-8">
+        <h2 className="text-[19px] lg:text-5xl capitalize font-semibold tracking-[0.5px]">
           DON&apos;T MISS OUT
           <br />
           NEW DROPS
         </h2>
 
-        <button className="bg-primary-blue transition-transform hover:scale-105 duration-300 cursor-pointer text-white px-7 py-3 rounded-lg uppercase">
-          Shop New Drops
-        </button>
+        <Button text="Shop New Drops" />
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-y-7 gap-x-3.5 lg:gap-4">
         {loading
           ? Array.from({ length: limit }).map((_, idx) => (
               <ProductSkeleton key={idx} />

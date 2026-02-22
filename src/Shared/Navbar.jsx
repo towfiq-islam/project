@@ -11,7 +11,7 @@ const Navbar = () => {
   return (
     <nav className="container mx-auto sticky top-5 z-50 px-4 sm:px-6 lg:px-8">
       <div className=" rounded-2xl py-3 bg-[#FAFAFA]">
-        <div className="px-6 py-4 flex items-center justify-between relative">
+        <div className="px-5 lg:px-6 py-3 lg:py-4 flex items-center justify-between relative">
           {/* ========== MOBILE LEFT (Hamburger) ========== */}
           <button className="md:hidden">
             <Menu className="w-6 h-6 text-gray-700" />

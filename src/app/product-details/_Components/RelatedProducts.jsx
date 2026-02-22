@@ -1,4 +1,3 @@
-import Link from "next/link";
 import React, { useState, useRef, useEffect } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination } from "swiper/modules";
@@ -36,7 +35,7 @@ const RelatedProducts = ({ relatedProducts }) => {
   return (
     <div className="relative">
       {/* Navigation buttons */}
-      <div className="absolute -top-10 sm:-top-12 right-5 flex gap-3 z-10">
+      <div className="absolute -top-14 sm:-top-12 right-5 flex gap-3 z-10">
         <button
           ref={prevRef}
           disabled={isPrevDisabled}
@@ -65,8 +64,8 @@ const RelatedProducts = ({ relatedProducts }) => {
       <div className="pt-5 md:px-7 lg:px-10 xl:px-16 2xl:px-0">
         <Swiper
           modules={[Navigation, Pagination]}
-          spaceBetween={30}
-          slidesPerView={1}
+          spaceBetween={20}
+          slidesPerView={2}
           pagination={{
             clickable: true,
             dynamicBullets: true,

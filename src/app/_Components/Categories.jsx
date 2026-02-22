@@ -3,6 +3,7 @@ import { ArrowRight } from "lucide-react";
 import axiosInstance from "@/lib/axios";
 import { useEffect, useState } from "react";
 import Image from "next/image";
+import Heading from "@/Components/Common/Heading";
 
 export function Categories() {
   const limit = 2;
@@ -49,11 +50,9 @@ export function Categories() {
 
   return (
     <section className="bg-secondary-black">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 pt-16">
-        <div className="flex items-end justify-between mb-10">
-          <h2 className="text-[26px] sm:text-5xl text-white uppercase font-semibold tracking-[0.5px]">
-            Categories
-          </h2>
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 pt-10 lg:pt-16">
+        <div className="flex items-end justify-between mb-7 lg:mb-10">
+          <Heading text="Categories" Variant="h2" className="text-white" />
 
           <div className="flex gap-2">
             {/* Prev */}

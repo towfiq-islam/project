@@ -4,6 +4,8 @@ import avatar2 from "@/Assets/avatar-2.jpg";
 import reviewOne from "@/Assets/reviewThree.png";
 import reviewTwo from "@/Assets/reviewTwo.png";
 import reviewThree from "@/Assets/reviewOne.png";
+import Heading from "@/Components/Common/Heading";
+import Button from "@/Components/Common/Button";
 const reviews = [
   {
     id: 1,
@@ -33,28 +35,23 @@ const reviews = [
 
 export function Reviews() {
   return (
-    <section className="container mx-auto px-4 sm:px-6 lg:px-8 py-20">
+    <section className="container mx-auto px-4 sm:px-6 lg:px-8 py-10 lg:py-20">
       {/* Header */}
-      <div className="flex items-end justify-between mb-10">
-        <h2 className="text-[26px] sm:text-5xl uppercase font-semibold tracking-[0.5px]">
-          Reviews
-        </h2>
-
-        <button className="bg-primary-blue transition-transform hover:scale-105 duration-300 cursor-pointer text-white px-7 py-3 rounded-lg uppercase">
-          See all
-        </button>
+      <div className="flex items-end justify-between mb-7 lg:mb-10">
+        <Heading text="Reviews" Variant="h3" />
+        <Button text="See all" />
       </div>
 
       {/* Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 lg:gap-6">
         {reviews?.map(review => (
           <div
             key={review?.id}
             className="bg-white rounded-3xl shadow-sm overflow-hidden hover:shadow-md transition-all duration-300"
           >
             {/* Top Content */}
-            <div className="p-6 bg-[#f5f5f5]">
-              <div className="flex justify-between items-start">
+            <div className="p-5 lg:p-6 bg-[#f5f5f5]">
+              <div className="flex justify-between items-start gap-3">
                 <div>
                   <h3 className="font-semibold text-secondary-black text-xl">
                     {review?.title}
@@ -63,7 +60,7 @@ export function Reviews() {
                   <p className="text-gray-600 mt-1">{review?.description}</p>
 
                   {/* Rating */}
-                  <div className="flex items-center gap-2 mt-3">
+                  <div className="flex items-center gap-2 lg:mt-3">
                     <div className="flex text-yellow-400">{"★★★★★"}</div>
                     <span className="text-sm font-medium text-gray-700">
                       {review?.rating}
@@ -83,7 +80,7 @@ export function Reviews() {
             </div>
 
             {/* Image */}
-            <div className="h-[350px] w-full relative overflow-hidden">
+            <div className="h-[280px] lg:h-[350px] w-full relative overflow-hidden">
               <Image
                 unoptimized
                 fill
