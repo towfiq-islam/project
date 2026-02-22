@@ -1,6 +1,6 @@
 export function PromoBanner() {
   return (
-    <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <section className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
       <div className="relative bg-blue-600 rounded-3xl overflow-hidden py-12 sm:py-16 px-6 sm:px-12">
         <div className="relative z-10 flex flex-col lg:flex-row items-center justify-between gap-8">
           <div className="text-white text-center lg:text-left">

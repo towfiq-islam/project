@@ -5,7 +5,7 @@ export function Hero() {
   const navigate = useRouter();
 
   return (
-    <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <section className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
       <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black mb-6">
         DO IT <span className="text-blue-600">RIGHT</span>
       </h1>

@@ -34,7 +34,7 @@ const RelatedProducts = ({ relatedProducts }) => {
   }, [swiperInstance]);
 
   return (
-    <div className="container relative">
+    <div className="relative">
       {/* Navigation buttons */}
       <div className="absolute -top-10 sm:-top-12 right-5 flex gap-3 z-10">
         <button

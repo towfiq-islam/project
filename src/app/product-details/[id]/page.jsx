@@ -1,6 +1,14 @@
 "use client";
 import { useState, useEffect } from "react";
-import { ChevronLeft, Heart, Share2, Check } from "lucide-react";
+import {
+  ChevronLeft,
+  Heart,
+  Share2,
+  Check,
+  ChevronRight,
+  X,
+  ZoomIn,
+} from "lucide-react";
 import { useParams, useRouter } from "next/navigation";
 import { useCart } from "@/Context/CartContext";
 import axiosInstance from "@/lib/axios";
@@ -9,11 +17,11 @@ import SizeChartModal from "../_Components/SizeChartModal";
 import ImagePreviewModal from "../_Components/ImagePreviewModal";
 
 const COLORS = [
-  { name: "Black", code: "#253043" },
-  { name: "White", code: "#707E6E" },
+  { name: "Shadow Navy", code: "#253043" },
+  { name: "Army Green", code: "#707E6E" },
 ];
 
-const SIZES = ["XS", "S", "M", "L", "XL"];
+const SIZES = ["38", "39", "40", "41", "42", "43", "44", "45", "46", "47"];
 
 export default function ProductDetailsPage() {
   const { id } = useParams();
@@ -28,20 +36,19 @@ export default function ProductDetailsPage() {
 
   const [selectedImage, setSelectedImage] = useState(0);
   const [selectedColor, setSelectedColor] = useState(0);
-  const [selectedSize, setSelectedSize] = useState("");
+  const [selectedSize, setSelectedSize] = useState("38");
   const [quantity, setQuantity] = useState(1);
   const [loading, setLoading] = useState(true);
   const [relatedProductLoading, setRelatedProductLoading] = useState(true);
   const [added, setAdded] = useState(false);
+  const [isWishlisted, setIsWishlisted] = useState(false);
 
-  // Data fetching
   useEffect(() => {
     const fetchProductDetails = async () => {
       try {
         setLoading(true);
         const { data } = await axiosInstance.get(`/products/${id}`);
         setProductDetails(data);
-        setSelectedSize(SIZES[0]);
         setSelectedImage(0);
       } catch (error) {
         console.error("Failed to fetch products:", error);
@@ -49,11 +56,9 @@ export default function ProductDetailsPage() {
         setLoading(false);
       }
     };
-
     fetchProductDetails();
   }, [id]);
 
-  // Data fetching for related products
   useEffect(() => {
     const fetchRelatedProducts = async () => {
       try {
@@ -66,13 +71,11 @@ export default function ProductDetailsPage() {
         setRelatedProductLoading(false);
       }
     };
-
     fetchRelatedProducts();
   }, [id]);
 
   const handleAddToCart = () => {
     if (!productDetails || !selectedSize) return;
-
     const cartItem = {
       id: `${productDetails.id}-${Date.now()}`,
       productId: productDetails.id,
@@ -83,28 +86,41 @@ export default function ProductDetailsPage() {
       color: COLORS[selectedColor]?.name,
       quantity,
     };
-
     addItem(cartItem);
     setAdded(true);
     setTimeout(() => setAdded(false), 2000);
   };
 
+  const getFourImages = (images = []) => {
+    if (!images.length) return [];
+    const result = [...images];
+    while (result.length < 4) {
+      result.push(images[result.length % images.length]);
+    }
+    return result.slice(0, 4);
+  };
+
   if (loading) {
     return (
-      <div className="min-h-screen bg-white flex items-center justify-center">
-        <div className="text-gray-500">Loading...</div>
+      <div className="min-h-screen bg-[#F5F5F0] flex items-center justify-center">
+        <div className="flex flex-col items-center gap-3">
+          <div className="w-8 h-8 border-2 border-black border-t-transparent rounded-full animate-spin" />
+          <p className="text-sm text-gray-500 tracking-widest uppercase">
+            Loading
+          </p>
+        </div>
       </div>
     );
   }
 
   if (!productDetails) {
     return (
-      <div className="min-h-screen bg-white flex items-center justify-center">
+      <div className="min-h-screen bg-[#F5F5F0] flex items-center justify-center">
         <div className="text-center">
           <div className="text-gray-500 mb-4">Product not found</div>
           <button
             onClick={() => router.push("/")}
-            className="text-blue-600 hover:text-blue-700"
+            className="text-black underline hover:no-underline text-sm"
           >
             Back to home
           </button>
@@ -113,112 +129,178 @@ export default function ProductDetailsPage() {
     );
   }
 
-  const getFourImages = (images = []) => {
-    if (!images.length) return [];
-
-    const result = [...images];
-
-    while (result.length < 4) {
-      result.push(images[result.length % images.length]);
-    }
-
-    return result.slice(0, 4);
-  };
-
   const displayImages = getFourImages(productDetails?.images);
 
   return (
-    <div className="min-h-screen bg-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-6">
+    <div className="container mx-auto">
+      <div className="px-4 sm:px-6 py-6">
+        {/* Back button */}
         <button
           onClick={() => router.back()}
-          className="flex items-center gap-2 cursor-pointer text-gray-600 hover:text-gray-900 mb-6"
+          className="flex items-center gap-1.5 text-sm text-gray-600 hover:text-black mb-6 transition-colors"
         >
-          <ChevronLeft className="w-5 h-5" />
-          Back to home
+          <ChevronLeft className="w-4 h-4" />
+          <span>Back to home</span>
         </button>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
-          {/* Left */}
-          <div className="grid grid-cols-2 gap-3">
-            {displayImages?.map((image, idx) => (
+        {/* Main layout */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16 lg:items-start">
+          {/* ===== LEFT: IMAGES ===== */}
+
+          {/* Desktop: 2x2 grid */}
+          <div className="hidden lg:grid grid-cols-2 gap-3">
+            {displayImages.map((image, idx) => (
               <div
                 key={idx}
                 onClick={() => {
                   setPreviewImage(image);
                   setIsPreviewOpen(true);
                 }}
-                className="bg-gray-100 cursor-pointer rounded-2xl w-full h-[350px] overflow-hidden"
+                className="group relative bg-[#EAEAE4] rounded-2xl overflow-hidden cursor-zoom-in"
+                style={{ height: "320px" }}
               >
                 <img
                   src={image}
-                  alt={`${productDetails?.title} image ${idx + 1}`}
-                  className="w-full h-full object-cover"
+                  alt={`${productDetails?.title} view ${idx + 1}`}
+                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                 />
+                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/5 transition-colors duration-300 flex items-center justify-center">
+                  <ZoomIn className="w-6 h-6 text-white opacity-0 group-hover:opacity-80 transition-opacity duration-300" />
+                </div>
               </div>
             ))}
           </div>
 
-          {/* Right */}
-          <div>
-            <h1 className="text-2xl sm:text-3xl font-bold mb-2">
-              {productDetails?.title}
-            </h1>
-
-            <p className="text-blue-600 text-xl font-bold mb-4">
-              ${productDetails?.price?.toFixed(2)}
-            </p>
-
-            {/* COLOR */}
-            <div className="mb-6">
-              <h3 className="text-sm font-semibold uppercase mb-3">Color</h3>
-              <div className="flex gap-3">
-                {COLORS.map((color, idx) => (
+          {/* Mobile: Carousel */}
+          <div className="lg:hidden">
+            <div
+              className="relative bg-[#EAEAE4] rounded-2xl overflow-hidden"
+              style={{ height: "360px" }}
+            >
+              <img
+                src={displayImages[selectedImage]}
+                alt={`${productDetails?.title}`}
+                className="w-full h-full object-cover"
+              />
+              {/* Prev/Next */}
+              {selectedImage > 0 && (
+                <button
+                  onClick={() => setSelectedImage(prev => prev - 1)}
+                  className="absolute left-3 top-1/2 -translate-y-1/2 w-8 h-8 bg-white/80 rounded-full flex items-center justify-center shadow"
+                >
+                  <ChevronLeft className="w-4 h-4" />
+                </button>
+              )}
+              {selectedImage < displayImages.length - 1 && (
+                <button
+                  onClick={() => setSelectedImage(prev => prev + 1)}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 w-8 h-8 bg-white/80 rounded-full flex items-center justify-center shadow"
+                >
+                  <ChevronRight className="w-4 h-4" />
+                </button>
+              )}
+              {/* Dots */}
+              <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-1.5">
+                {displayImages.map((_, idx) => (
                   <button
                     key={idx}
-                    onClick={() => setSelectedColor(idx)}
-                    className={`w-8 h-8 rounded-full border-2 flex items-center justify-center ${
-                      selectedColor === idx ? "border-black" : "border-gray-300"
-                    }`}
-                    style={{ backgroundColor: color.code }}
+                    onClick={() => setSelectedImage(idx)}
+                    className={`rounded-full transition-all ${selectedImage === idx ? "w-5 h-1.5 bg-black" : "w-1.5 h-1.5 bg-black/30"}`}
                   />
                 ))}
               </div>
             </div>
 
-            {/* SIZE */}
-            <div className="mb-6">
-              <div className="flex items-center justify-between mb-3">
-                <h3 className="text-sm font-semibold uppercase">Size</h3>
+            {/* Mobile thumbnail strip */}
+            <div className="flex gap-2 mt-2 overflow-x-auto pb-1">
+              {displayImages.map((image, idx) => (
+                <button
+                  key={idx}
+                  onClick={() => setSelectedImage(idx)}
+                  className={`flex-shrink-0 w-16 h-16 rounded-xl overflow-hidden border-2 transition-all ${
+                    selectedImage === idx
+                      ? "border-black"
+                      : "border-transparent"
+                  }`}
+                >
+                  <img
+                    src={image}
+                    alt=""
+                    className="w-full h-full object-cover"
+                  />
+                </button>
+              ))}
+            </div>
+          </div>
 
+          {/* ===== RIGHT: PRODUCT INFO ===== */}
+          <div className="flex flex-col gap-5">
+            {/* Badge */}
+            <div>
+              <span className="inline-block bg-blue-600 text-white text-xs font-semibold px-3 py-1 rounded-full tracking-wide uppercase">
+                New Release
+              </span>
+            </div>
+
+            {/* Title & Price */}
+            <div>
+              <h1 className="text-2xl sm:text-3xl font-extrabold text-black leading-tight tracking-tight uppercase mb-2">
+                {productDetails?.title}
+              </h1>
+              <p className="text-2xl font-bold text-black">
+                ${productDetails?.price?.toFixed(2)}
+              </p>
+            </div>
+
+            {/* Color */}
+            <div>
+              <h3 className="text-xs font-bold uppercase tracking-widest text-gray-500 mb-2.5">
+                Color
+              </h3>
+              <div className="flex items-center gap-3">
+                {COLORS.map((color, idx) => (
+                  <button
+                    key={idx}
+                    onClick={() => setSelectedColor(idx)}
+                    title={color.name}
+                    className={`w-8 h-8 rounded-full border-2 transition-all ${
+                      selectedColor === idx
+                        ? "border-black scale-110 shadow-md"
+                        : "border-transparent hover:border-gray-400"
+                    }`}
+                    style={{ backgroundColor: color.code }}
+                  />
+                ))}
+              </div>
+              <p className="text-xs text-gray-500 mt-1.5">
+                {COLORS[selectedColor]?.name} /{" "}
+                {COLORS.map(c => c.name).join(" / ")}
+              </p>
+            </div>
+
+            {/* Size */}
+            <div>
+              <div className="flex items-center justify-between mb-2.5">
+                <h3 className="text-xs font-bold uppercase tracking-widest text-gray-500">
+                  Size
+                </h3>
                 <button
                   onClick={() => setIsSizeChartOpen(true)}
-                  className="text-xs cursor-pointer underline text-gray-500 hover:text-black"
+                  className="text-xs font-semibold uppercase tracking-wider text-black underline underline-offset-2 hover:no-underline transition-all"
                 >
-                  Size chart
+                  Size Chart
                 </button>
               </div>
 
-              <div className="grid grid-cols-4 sm:grid-cols-5 gap-2">
-                {[
-                  "38",
-                  "39",
-                  "40",
-                  "41",
-                  "42",
-                  "43",
-                  "44",
-                  "45",
-                  "46",
-                  "47",
-                ].map(size => (
+              <div className="grid grid-cols-5 sm:grid-cols-5 gap-2">
+                {SIZES.map(size => (
                   <button
                     key={size}
                     onClick={() => setSelectedSize(size)}
-                    className={`py-2 rounded-lg text-sm font-medium transition ${
+                    className={`py-2.5 rounded-lg text-sm font-semibold transition-all ${
                       selectedSize === size
-                        ? "bg-black text-white"
-                        : "bg-gray-100 text-gray-800 hover:bg-gray-200"
+                        ? "bg-black text-white shadow-md"
+                        : "bg-white text-gray-700 hover:bg-gray-100 border border-gray-200"
                     }`}
                   >
                     {size}
@@ -227,48 +309,64 @@ export default function ProductDetailsPage() {
               </div>
             </div>
 
-            {/* BUTTONS */}
-            <div className="space-y-3">
-              <div className="flex gap-3">
+            {/* Buttons */}
+            <div className="space-y-2.5 pt-1">
+              <div className="flex gap-2.5">
                 <button
                   onClick={handleAddToCart}
-                  className={`flex-1 py-3 rounded-lg font-medium transition-all flex items-center justify-center gap-2 ${
+                  className={`flex-1 py-3.5 rounded-xl font-bold text-sm tracking-widest uppercase transition-all flex items-center justify-center gap-2 ${
                     added
                       ? "bg-green-600 text-white"
-                      : "bg-black text-white hover:bg-gray-800"
+                      : "bg-black text-white hover:bg-gray-800 active:scale-[0.98]"
                   }`}
                 >
                   {added ? (
                     <>
-                      <Check className="w-5 h-5" />
-                      Added to cart
+                      <Check className="w-4 h-4" />
+                      Added to Cart
                     </>
                   ) : (
-                    "ADD TO CART"
+                    "Add to Cart"
                   )}
                 </button>
 
-                <button className="w-12 flex items-center justify-center border border-gray-300 rounded-lg hover:bg-gray-100 transition">
-                  <Heart className="w-5 h-5" />
+                <button
+                  onClick={() => setIsWishlisted(v => !v)}
+                  className={`w-12 flex items-center justify-center rounded-xl border transition-all ${
+                    isWishlisted
+                      ? "bg-red-50 border-red-300 text-red-500"
+                      : "bg-white border-gray-200 text-gray-600 hover:bg-gray-50"
+                  }`}
+                >
+                  <Heart
+                    className={`w-5 h-5 ${isWishlisted ? "fill-red-500 text-red-500" : ""}`}
+                  />
                 </button>
               </div>
 
-              <button className="w-full bg-indigo-600 text-white py-3 rounded-lg font-semibold hover:bg-indigo-700 transition">
-                BUY IT NOW
+              <button className="w-full bg-[#4F46E5] hover:bg-[#4338CA] text-white py-3.5 rounded-xl font-bold text-sm tracking-widest uppercase transition-all active:scale-[0.98]">
+                Buy It Now
               </button>
             </div>
 
-            <div className="bg-gray-50 p-4 rounded-lg mb-6">
-              <h3 className="font-medium mb-2">About the product</h3>
-              <p className="text-sm text-gray-600">
+            {/* About */}
+            <div>
+              <h3 className="font-bold text-sm uppercase tracking-wider mb-3">
+                About the Product
+              </h3>
+
+              <p className="text-sm text-gray-600 leading-relaxed mb-4">
                 {productDetails?.description}
               </p>
             </div>
           </div>
         </div>
 
-        <div className="pt-12">
-          <h2 className="text-2xl font-bold mb-6">You may also like</h2>
+        {/* Related Products */}
+        <div className="pt-4">
+          <h2 className="text-xl font-bold uppercase tracking-wider mb-6">
+            You May Also Like
+          </h2>
           <RelatedProducts relatedProducts={relatedProducts} />
         </div>
       </div>
@@ -277,7 +375,6 @@ export default function ProductDetailsPage() {
         isOpen={isSizeChartOpen}
         onClose={() => setIsSizeChartOpen(false)}
       />
-
       <ImagePreviewModal
         isOpen={isPreviewOpen}
         image={previewImage}
