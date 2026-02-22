@@ -1,65 +1,59 @@
 "use client";
 import { useCart } from "@/Context/CartContext";
-import { Search, ShoppingCart, User } from "lucide-react";
+import { Search, ShoppingCart, User, ChevronDown, Menu } from "lucide-react";
 import Link from "next/link";
+import logo from "@/Assets/logo.png";
+import Image from "next/image";
 
 const Navbar = () => {
   const { items } = useCart();
 
   return (
-    <header className="bg-white border-b border-gray-200 sticky top-0 z-50">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
-          <div className="flex items-center gap-8">
-            <Link
-              href="/"
-              className="text-xl font-bold hover:text-gray-600 transition-colors"
-            >
-              KICKS
-            </Link>
-            <nav className="hidden md:flex gap-6">
-              <a href="#" className="text-sm font-medium hover:text-gray-600">
-                New & Featured
-              </a>
-              <a href="#" className="text-sm font-medium hover:text-gray-600">
-                Men
-              </a>
-              <a href="#" className="text-sm font-medium hover:text-gray-600">
-                Women
-              </a>
-              <a href="#" className="text-sm font-medium hover:text-gray-600">
-                Kids
-              </a>
-            </nav>
+    <nav className="container mx-auto sticky top-5 z-50 px-4 sm:px-6 lg:px-8">
+      <div className=" rounded-2xl py-3 bg-[#FAFAFA]">
+        <div className="px-6 py-4 flex items-center justify-between relative">
+          {/* ========== MOBILE LEFT (Hamburger) ========== */}
+          <button className="md:hidden">
+            <Menu className="w-6 h-6 text-gray-700" />
+          </button>
+
+          {/* ========== DESKTOP LEFT (Men / Women) ========== */}
+          <div className="hidden md:flex items-center gap-7 text-sm font-medium">
+            <button className="flex items-center gap-1 hover:text-black transition cursor-pointer font-bold">
+              Men <ChevronDown className="w-4 h-4" />
+            </button>
+            <button className="flex items-center gap-1 hover:text-black transition cursor-pointer font-bold">
+              Women <ChevronDown className="w-4 h-4" />
+            </button>
           </div>
 
-          <div className="flex items-center gap-4">
-            <div className="hidden sm:flex items-center bg-gray-100 rounded-full px-4 py-2 gap-2">
-              <Search className="w-4 h-4 text-gray-500" />
-              <input
-                type="text"
-                placeholder="Search"
-                className="bg-transparent border-none outline-none text-sm w-32 lg:w-48"
-              />
-            </div>
-            <button className="p-2 hover:bg-gray-100 rounded-full">
-              <User className="w-5 h-5" />
-            </button>
-            <Link
-              href="/cart"
-              className="p-2 hover:bg-gray-100 rounded-full relative transition-colors"
-            >
-              <ShoppingCart className="w-5 h-5" />
-              {items.length > 0 && (
-                <span className="absolute top-1 right-1 bg-blue-600 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
-                  {items.length}
-                </span>
-              )}
+          {/* ========== CENTER LOGO ========== */}
+          <Link
+            href="/"
+            className="absolute left-1/2 -translate-x-1/2 text-2xl md:text-3xl font-extrabold tracking-wide"
+          >
+            <Image src={logo} alt="logo" unoptimized />
+          </Link>
+
+          {/* ========== RIGHT SIDE ========== */}
+          <div className="flex items-center gap-7 text-gray-700">
+            {/* Desktop Search */}
+            <Search className="hidden md:block w-5 h-5 cursor-pointer hover:text-black transition" />
+
+            {/* User */}
+            <User className="w-5 h-5 cursor-pointer hover:text-black transition" />
+
+            {/* Cart */}
+            <Link href="/cart" className="relative">
+              <ShoppingCart className="w-5 h-5 cursor-pointer hover:text-black transition" />
+              <span className="absolute -top-2 -right-3 bg-orange-500 text-white text-xs w-5 h-5 flex items-center justify-center rounded-full font-semibold">
+                {items.length}
+              </span>
             </Link>
           </div>
         </div>
       </div>
-    </header>
+    </nav>
   );
 };
 

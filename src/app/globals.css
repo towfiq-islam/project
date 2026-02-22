@@ -2,11 +2,12 @@
 
 @theme {
   /* Colors */
-  --color-primary-green: #63be60;
-  --color-secondary-blue: #0184ff;
+  --color-primary-blue: #4a69e2;
+  --color-secondary-black: #232321;
+  --color-background: #e7e7e3;
 
   /* Font Family */
-  --font-poppins: var(--font-poppins);
+  --font-rubik: var(--font-rubik);
 
   /* Breakpoints */
   --breakpoint-sm: 480px;
@@ -18,7 +19,7 @@
 }
 
 body {
-  @apply font-poppins;
+  @apply font-rubik bg-background text-secondary-black;
 }
 
 /* Custom CSS */
@@ -42,4 +43,8 @@ body {
   .swiper-pagination-horizontal.swiper-pagination-bullets
 ).swiper-pagination-bullets-dynamic {
   width: 100px !important;
+}
+
+.writing-mode-vertical {
+  writing-mode: vertical-rl;
 }

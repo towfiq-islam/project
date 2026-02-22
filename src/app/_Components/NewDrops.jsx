@@ -48,15 +48,16 @@ export function NewDrops() {
   );
 
   return (
-    <section className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
-      <div className="flex items-center justify-between mb-6">
-        <h2 className="text-2xl sm:text-3xl font-bold">
-          DONT MISS OUT
+    <section className="container mx-auto px-4 sm:px-6 lg:px-8 pb-8">
+      <div className="flex items-end justify-between mb-6">
+        <h2 className="text-2xl sm:text-5xl capitalize font-semibold tracking-[0.6px]">
+          DON&apos;T MISS OUT
           <br />
           NEW DROPS
         </h2>
-        <button className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-full text-sm font-medium flex items-center gap-2 transition-colors">
-          Shop <ArrowRight className="w-4 h-4" />
+
+        <button className="bg-primary-blue transition-transform hover:scale-105 duration-300 cursor-pointer text-white px-7 py-3 rounded-lg uppercase">
+          Shop New Drops
         </button>
       </div>
 

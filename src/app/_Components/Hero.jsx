@@ -1,52 +1,67 @@
 "use client";
-import { useRouter } from "next/navigation";
+import Image from "next/image";
+import { useState } from "react";
+import heroImg from "@/Assets/hero.png";
+import thumb1 from "@/Assets/thumbnail.png";
+import thumb2 from "@/Assets/thumb2.jpg";
 
 export function Hero() {
-  const navigate = useRouter();
+  const [activeImage, setActiveImage] = useState(thumb1);
+  const thumbnails = [thumb1, thumb2];
 
   return (
-    <section className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
-      <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black mb-6">
-        DO IT <span className="text-blue-600">RIGHT</span>
-      </h1>
+    <section className="container mx-auto px-4 sm:px-6 lg:px-8 py-20">
+      <figure className="relative mb-6 w-full mx-auto pb-10">
+        <Image src={heroImg} alt="hero_img" unoptimized className="w-full" />
+      </figure>
 
-      <div
-        className="relative bg-gradient-to-br from-orange-400 to-amber-600 rounded-3xl overflow-hidden h-[400px] sm:h-[500px] cursor-pointer"
-        onClick={() => navigate.push("/product/0")}
-      >
-        <img
-          src="https://images.pexels.com/photos/2529148/pexels-photo-2529148.jpeg?auto=compress&cs=tinysrgb&w=1200"
+      <div className="relative rounded-3xl overflow-hidden h-[400px] sm:h-[750px]">
+        {/* Main Image */}
+        <Image
+          src={activeImage}
           alt="Nike Air Max"
-          className="w-full h-full object-cover"
+          fill
+          unoptimized
+          className="object-cover"
         />
 
-        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-
-        <div className="absolute bottom-8 left-8 text-white">
-          <h2 className="text-3xl sm:text-4xl font-bold mb-2">NIKE AIR MAX</h2>
-          <p className="text-sm sm:text-base mb-4 max-w-md">
-            Nike introducing the new air max for everyone comfort
+        {/* Vertical Badge */}
+        <div className="absolute left-0 top-48 -translate-y-1/2">
+          <p className="bg-secondary-black text-gray-200 px-3 py-4 rounded-l-lg text-sm writing-mode-vertical rotate-180">
+            Nike product of the year
           </p>
-          <button className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2.5 rounded-full font-medium transition-colors">
+        </div>
+
+        {/* Text Content */}
+        <div className="absolute bottom-8 left-8 text-white">
+          <h2 className="text-3xl sm:text-5xl font-bold mb-2">NIKE AIR MAX</h2>
+
+          <p className="text-sm sm:text-base mb-4 max-w-xs text-gray-200">
+            Nike introducing the new air max for everyone&apos;s comfort
+          </p>
+
+          <button className="bg-primary-blue transition-transform hover:scale-105 duration-300 cursor-pointer text-white px-8 py-3 rounded-lg uppercase">
             Shop now
           </button>
         </div>
 
-        <div className="absolute bottom-8 right-8 flex gap-2">
-          <div className="w-16 h-16 sm:w-20 sm:h-20 bg-white/90 backdrop-blur-sm rounded-xl overflow-hidden">
-            <img
-              src="https://images.pexels.com/photos/1598505/pexels-photo-1598505.jpeg?auto=compress&cs=tinysrgb&w=200"
-              alt="View 1"
-              className="w-full h-full object-cover"
-            />
-          </div>
-          <div className="w-16 h-16 sm:w-20 sm:h-20 bg-white/90 backdrop-blur-sm rounded-xl overflow-hidden">
-            <img
-              src="https://images.pexels.com/photos/2529147/pexels-photo-2529147.jpeg?auto=compress&cs=tinysrgb&w=200"
-              alt="View 2"
-              className="w-full h-full object-cover"
-            />
-          </div>
+        {/* Clickable Thumbnails */}
+        <div className="absolute bottom-8 right-8 flex gap-3">
+          {thumbnails?.map((thumb, index) => (
+            <div
+              key={index}
+              onClick={() => setActiveImage(thumb)}
+              className={`w-16 h-16 sm:w-20 sm:h-20 rounded-xl overflow-hidden cursor-pointer border-2 transition 
+                ${activeImage === thumb ? "border-blue-500 scale-105" : "border-transparent"}
+              `}
+            >
+              <Image
+                src={thumb}
+                alt={`Thumbnail ${index}`}
+                className="w-full h-full object-cover"
+              />
+            </div>
+          ))}
         </div>
       </div>
     </section>
