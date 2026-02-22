@@ -1,5 +1,4 @@
 "use client";
-import { ArrowRight } from "lucide-react";
 import { useState, useEffect } from "react";
 import ProductSkeleton from "@/Components/Loader/Loader";
 import axiosInstance from "@/lib/axios";
@@ -11,8 +10,7 @@ export function NewDrops() {
   const [page, setPage] = useState(1);
   const [isLastPage, setIsLastPage] = useState(false);
   const limit = 4;
-
-  const totalVisible = 5; // max visible page numbers
+  const totalVisible = 5;
 
   // Fetch products
   useEffect(() => {
@@ -49,8 +47,8 @@ export function NewDrops() {
 
   return (
     <section className="container mx-auto px-4 sm:px-6 lg:px-8 pb-8">
-      <div className="flex items-end justify-between mb-6">
-        <h2 className="text-2xl sm:text-5xl capitalize font-semibold tracking-[0.6px]">
+      <div className="flex items-end justify-between mb-8">
+        <h2 className="text-[26px] sm:text-5xl capitalize font-semibold tracking-[0.5px]">
           DON&apos;T MISS OUT
           <br />
           NEW DROPS
@@ -73,23 +71,21 @@ export function NewDrops() {
 
       {/* Pagination */}
       <div className="flex justify-center items-center mt-8 gap-2 flex-wrap">
-        {/* Prev Button */}
         <button
           disabled={page === 1}
           onClick={() => setPage(prev => prev - 1)}
-          className="px-3 py-2 bg-gray-200 rounded disabled:opacity-50 cursor-pointer"
+          className="px-3 py-1.5 text-sm bg-gray-300 rounded disabled:opacity-50 cursor-pointer"
         >
           Prev
         </button>
 
-        {/* Page Numbers */}
         {pages?.map(p => (
           <button
             key={p}
             onClick={() => setPage(p)}
-            className={`px-3 py-2 rounded cursor-pointer ${
+            className={`size-8 text-sm grid place-items-center rounded cursor-pointer ${
               page === p
-                ? "bg-black text-white"
+                ? "bg-secondary-black text-gray-200"
                 : "bg-gray-200 hover:bg-gray-300"
             }`}
           >
@@ -97,11 +93,10 @@ export function NewDrops() {
           </button>
         ))}
 
-        {/* Next Button */}
         <button
-          disabled={isLastPage} // disables if last page
+          disabled={isLastPage}
           onClick={() => setPage(prev => prev + 1)}
-          className="px-3 py-2 bg-gray-200 rounded disabled:opacity-50 cursor-pointer"
+          className="px-3 py-1.5 text-sm bg-gray-300 rounded disabled:opacity-50 cursor-pointer"
         >
           Next
         </button>

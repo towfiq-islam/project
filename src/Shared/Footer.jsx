@@ -1,112 +1,94 @@
-import { Facebook, Twitter, Instagram, Youtube } from "lucide-react";
+import { Facebook, Twitter, Instagram, Linkedin } from "lucide-react";
+import kickImg from "@/Assets/kick_lg.png";
+import Image from "next/image";
 
 export function Footer() {
   return (
-    <footer className="bg-black text-white">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+    <footer className="container mx-auto px-4 sm:px-6 lg:px-8 mb-5">
+      <div className="bg-secondary-black text-white rounded-3xl pt-16 px-8 sm:px-16 relative overflow-hidden -mt-10">
+        {/* Grid Content */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 relative z-10">
+          {/* About */}
           <div>
-            <h3 className="text-lg font-bold mb-4">About us</h3>
-            <p className="text-sm text-gray-400 leading-relaxed">
+            <h3 className="text-xl font-medium text-[#ffa52f] mb-5">
+              About us
+            </h3>
+            <p className="text-sm text-gray-200 leading-relaxed">
               We are the biggest hyperstore in the universe. We got you all
               covered with our exclusive collections and latest drops.
             </p>
           </div>
 
+          {/* Categories */}
           <div>
-            <h3 className="text-lg font-bold mb-4">Categories</h3>
-            <ul className="space-y-2 text-sm text-gray-400">
-              <li>
-                <a href="#" className="hover:text-white transition-colors">
-                  Runners
-                </a>
-              </li>
-              <li>
-                <a href="#" className="hover:text-white transition-colors">
-                  Sneakers
-                </a>
-              </li>
-              <li>
-                <a href="#" className="hover:text-white transition-colors">
-                  Basketball
-                </a>
-              </li>
-              <li>
-                <a href="#" className="hover:text-white transition-colors">
-                  Outdoor
-                </a>
-              </li>
-              <li>
-                <a href="#" className="hover:text-white transition-colors">
-                  Golf
-                </a>
-              </li>
-              <li>
-                <a href="#" className="hover:text-white transition-colors">
-                  Hiking
-                </a>
-              </li>
+            <h3 className="text-xl font-medium text-[#ffa52f] mb-5">
+              Categories
+            </h3>
+            <ul className="space-y-2 text-sm text-gray-200">
+              {[
+                "Runners",
+                "Sneakers",
+                "Basketball",
+                "Outdoor",
+                "Golf",
+                "Hiking",
+              ].map(item => (
+                <li key={item}>
+                  <a href="#" className="hover:text-white transition-colors">
+                    {item}
+                  </a>
+                </li>
+              ))}
             </ul>
           </div>
 
+          {/* Company */}
           <div>
-            <h3 className="text-lg font-bold mb-4">Company</h3>
-            <ul className="space-y-2 text-sm text-gray-400">
-              <li>
-                <a href="#" className="hover:text-white transition-colors">
-                  About
-                </a>
-              </li>
-              <li>
-                <a href="#" className="hover:text-white transition-colors">
-                  Contact
-                </a>
-              </li>
-              <li>
-                <a href="#" className="hover:text-white transition-colors">
-                  Blogs
-                </a>
-              </li>
+            <h3 className="text-xl font-medium text-[#ffa52f] mb-5">Company</h3>
+            <ul className="space-y-2 text-sm text-gray-200">
+              {["About", "Contact", "Blogs"].map(item => (
+                <li key={item}>
+                  <a href="#" className="hover:text-white transition-colors">
+                    {item}
+                  </a>
+                </li>
+              ))}
             </ul>
           </div>
 
+          {/* Social */}
           <div>
-            <h3 className="text-lg font-bold mb-4">Follow us</h3>
-            <div className="flex gap-3">
-              <a
-                href="#"
-                className="w-10 h-10 bg-gray-800 hover:bg-gray-700 rounded-lg flex items-center justify-center transition-colors"
-              >
-                <Facebook className="w-5 h-5" />
+            <h3 className="text-xl font-medium text-[#ffa52f] mb-5">
+              Follow us
+            </h3>
+            <div className="flex gap-3.5">
+              <a className="text-gray-200 hover:text-white transition cursor-pointer">
+                <Facebook size={18} />
               </a>
-              <a
-                href="#"
-                className="w-10 h-10 bg-gray-800 hover:bg-gray-700 rounded-lg flex items-center justify-center transition-colors"
-              >
-                <Instagram className="w-5 h-5" />
+              <a className="text-gray-200 hover:text-white transition cursor-pointer">
+                <Instagram size={18} />
               </a>
-              <a
-                href="#"
-                className="w-10 h-10 bg-gray-800 hover:bg-gray-700 rounded-lg flex items-center justify-center transition-colors"
-              >
-                <Twitter className="w-5 h-5" />
+              <a className="text-gray-200 hover:text-white transition cursor-pointer">
+                <Twitter size={18} />
               </a>
-              <a
-                href="#"
-                className="w-10 h-10 bg-gray-800 hover:bg-gray-700 rounded-lg flex items-center justify-center transition-colors"
-              >
-                <Youtube className="w-5 h-5" />
+              <a className="text-gray-200 hover:text-white transition cursor-pointer">
+                <Linkedin size={18} />
               </a>
             </div>
           </div>
         </div>
 
-        <div className="text-center pt-8 border-t border-gray-800">
-          <div className="text-6xl sm:text-7xl md:text-8xl font-black mb-4 tracking-tighter">
-            KICKS
-          </div>
+        {/* Big Background */}
+        <div className="pt-20">
+          <Image
+            src={kickImg}
+            alt="kick_img"
+            className="w-fit object-contain mx-auto"
+          />
         </div>
       </div>
+
+      <p className="text-center pt-5">© All rights reserved </p>
     </footer>
   );
 }

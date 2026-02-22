@@ -1,96 +1,99 @@
-import { ArrowRight } from "lucide-react";
 import Image from "next/image";
-
+import avatar1 from "@/Assets/avatar-1.jpg";
+import avatar2 from "@/Assets/avatar-2.jpg";
+import reviewOne from "@/Assets/reviewThree.png";
+import reviewTwo from "@/Assets/reviewTwo.png";
+import reviewThree from "@/Assets/reviewOne.png";
 const reviews = [
   {
     id: 1,
     title: "Good Quality",
     description: "I highly recommend shopping from kicks",
     rating: 5.0,
-    image:
-      "https://images.pexels.com/photos/2529147/pexels-photo-2529147.jpeg?auto=compress&cs=tinysrgb&w=800",
-    avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=1",
+    image: reviewOne,
+    avatar: avatar1,
   },
   {
     id: 2,
     title: "Good Quality",
     description: "I highly recommend shopping from kicks",
     rating: 5.0,
-    image:
-      "https://images.pexels.com/photos/1598505/pexels-photo-1598505.jpeg?auto=compress&cs=tinysrgb&w=800",
-    avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=2",
+    image: reviewTwo,
+    avatar: avatar2,
   },
   {
     id: 3,
     title: "Good Quality",
     description: "I highly recommend shopping from kicks",
     rating: 5.0,
-    image:
-      "https://images.pexels.com/photos/1599012/pexels-photo-1599012.jpeg?auto=compress&cs=tinysrgb&w=800",
-    avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=3",
+    image: reviewThree,
+    avatar: avatar1,
   },
 ];
 
 export function Reviews() {
   return (
-    <section className="bg-[#f3f3f3] py-16">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header */}
-        <div className="flex items-center justify-between mb-10">
-          <h2 className="text-4xl font-extrabold tracking-wide">REVIEWS</h2>
+    <section className="container mx-auto px-4 sm:px-6 lg:px-8 py-20">
+      {/* Header */}
+      <div className="flex items-end justify-between mb-10">
+        <h2 className="text-[26px] sm:text-5xl uppercase font-semibold tracking-[0.5px]">
+          Reviews
+        </h2>
 
-          <button className="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-lg text-sm font-semibold flex items-center gap-2 transition-all">
-            SEE ALL <ArrowRight className="w-4 h-4" />
-          </button>
-        </div>
+        <button className="bg-primary-blue transition-transform hover:scale-105 duration-300 cursor-pointer text-white px-7 py-3 rounded-lg uppercase">
+          See all
+        </button>
+      </div>
 
-        {/* Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {reviews.map(review => (
-            <div
-              key={review.id}
-              className="bg-white rounded-3xl shadow-sm overflow-hidden hover:shadow-md transition-all duration-300"
-            >
-              {/* Top Content */}
-              <div className="p-6 bg-[#f5f5f5]">
-                <div className="flex justify-between items-start">
-                  <div>
-                    <h3 className="font-semibold text-lg">{review.title}</h3>
+      {/* Cards */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {reviews?.map(review => (
+          <div
+            key={review?.id}
+            className="bg-white rounded-3xl shadow-sm overflow-hidden hover:shadow-md transition-all duration-300"
+          >
+            {/* Top Content */}
+            <div className="p-6 bg-[#f5f5f5]">
+              <div className="flex justify-between items-start">
+                <div>
+                  <h3 className="font-semibold text-secondary-black text-xl">
+                    {review?.title}
+                  </h3>
 
-                    <p className="text-sm text-gray-600 mt-1">
-                      {review.description}
-                    </p>
+                  <p className="text-gray-600 mt-1">{review?.description}</p>
 
-                    {/* Rating */}
-                    <div className="flex items-center gap-2 mt-3">
-                      <div className="flex text-yellow-400">{"★★★★★"}</div>
-                      <span className="text-sm font-medium text-gray-700">
-                        {review.rating}
-                      </span>
-                    </div>
+                  {/* Rating */}
+                  <div className="flex items-center gap-2 mt-3">
+                    <div className="flex text-yellow-400">{"★★★★★"}</div>
+                    <span className="text-sm font-medium text-gray-700">
+                      {review?.rating}
+                    </span>
                   </div>
-
-                  <img
-                    src={review.avatar}
-                    alt="avatar"
-                    className="w-12 h-12 rounded-full object-cover"
-                  />
                 </div>
-              </div>
 
-              {/* Image */}
-              <div className="h-72 w-full relative overflow-hidden">
                 <Image
+                  src={review.avatar}
+                  alt="avatar"
+                  width={48}
+                  height={48}
                   unoptimized
-                  fill
-                  src={review.image}
-                  alt="review"
-                  className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
+                  className="rounded-full object-cover"
                 />
               </div>
             </div>
-          ))}
-        </div>
+
+            {/* Image */}
+            <div className="h-[350px] w-full relative overflow-hidden">
+              <Image
+                unoptimized
+                fill
+                src={review.image}
+                alt="review"
+                className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
+              />
+            </div>
+          </div>
+        ))}
       </div>
     </section>
   );
