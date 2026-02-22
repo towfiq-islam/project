@@ -26,7 +26,6 @@ export function Categories() {
     fetchCategories();
   }, []);
 
-  // Slice categories for current view
   const visibleCategories = categories.slice(
     currentIndex,
     currentIndex + limit,

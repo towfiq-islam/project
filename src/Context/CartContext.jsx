@@ -4,15 +4,6 @@ import React, { createContext, useState, useContext, useEffect } from "react";
 const CartContext = createContext(undefined);
 
 export function CartProvider({ children }) {
-  // const [items, setItems] = useState([]);
-
-  // useEffect(() => {
-  //   const saved = localStorage.getItem("cart");
-  //   if (saved) {
-  //     setItems(JSON.parse(saved));
-  //   }
-  // }, []);
-
   const [items, setItems] = useState(() => {
     if (typeof window !== "undefined") {
       const saved = localStorage.getItem("cart");
