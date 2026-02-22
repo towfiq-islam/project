@@ -11,7 +11,7 @@ export function Hero() {
   const thumbnails = [thumb1, thumb2];
 
   return (
-    <section className="container mx-auto px-4 sm:px-6 lg:px-8 pt-14 lg:pt-22 pb-16 lg:pb-26">
+    <section className="container mx-auto px-4 md:px-7 lg:px-10 xl:px-16 2xl:px-16 pt-14 lg:pt-22 pb-16 lg:pb-26">
       <figure className="relative lg:mb-6 w-full mx-auto pb-10">
         <Image src={heroImg} alt="hero_img" unoptimized className="w-full" />
       </figure>

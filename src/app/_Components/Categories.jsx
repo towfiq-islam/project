@@ -4,6 +4,7 @@ import axiosInstance from "@/lib/axios";
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import Heading from "@/Components/Common/Heading";
+import { CategorySkeleton } from "@/Components/Loader/Loader";
 
 export function Categories() {
   const limit = 2;
@@ -50,7 +51,7 @@ export function Categories() {
 
   return (
     <section className="bg-secondary-black">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 pt-10 lg:pt-16">
+      <div className="container mx-auto px-4 md:px-7 lg:px-10 xl:px-16 2xl:px-16 lg:pt-16">
         <div className="flex items-end justify-between mb-7 lg:mb-10">
           <Heading text="Categories" Variant="h2" className="text-white" />
 
@@ -85,7 +86,9 @@ export function Categories() {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
           {loading
-            ? "Loading..."
+            ? Array.from({ length: limit }).map((_, index) => (
+                <CategorySkeleton key={index} />
+              ))
             : visibleCategories.map(category => (
                 <div
                   key={category.id}

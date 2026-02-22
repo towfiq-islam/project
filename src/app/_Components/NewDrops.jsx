@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
-import ProductSkeleton from "@/Components/Loader/Loader";
+import { ProductSkeleton } from "@/Components/Loader/Loader";
 import axiosInstance from "@/lib/axios";
 import Product from "@/Components/Common/Product";
 import Button from "@/Components/Common/Button";
@@ -47,7 +47,7 @@ export function NewDrops() {
   );
 
   return (
-    <section className="container mx-auto px-4 sm:px-6 lg:px-8 pb-8">
+    <section className="container mx-auto px-4 md:px-7 lg:px-10 xl:px-16 2xl:px-16 pb-8">
       <div className="flex items-center lg:items-end justify-between mb-8">
         <h2 className="text-[19px] lg:text-5xl capitalize font-semibold tracking-[0.5px]">
           DON&apos;T MISS OUT

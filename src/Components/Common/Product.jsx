@@ -4,7 +4,7 @@ import React from "react";
 const Product = ({ product }) => {
   return (
     <div key={product?.id} className="group">
-      <div className="rounded-2xl lg:rounded-3xl shadow-sm hover:shadow-md transition bg-white p-2 lg:p-2.5 h-[190px] lg:h-[370px] w-full overflow-hidden mb-3">
+      <div className="rounded-2xl lg:rounded-3xl shadow-sm hover:shadow-md transition bg-white p-2 lg:p-2.5 h-[190px] lg:h-[350px] w-full overflow-hidden mb-3">
         <figure className="relative w-full h-full bg-[#eceef0] rounded-3xl">
           <img
             src={product?.images?.[0]}

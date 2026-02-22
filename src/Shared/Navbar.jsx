@@ -9,7 +9,7 @@ const Navbar = () => {
   const { items } = useCart();
 
   return (
-    <nav className="container mx-auto sticky top-5 z-50 px-4 sm:px-6 lg:px-8">
+    <nav className="container mx-auto px-4 md:px-7 lg:px-10 xl:px-16 2xl:px-16 sticky top-5 z-50 px-4 ">
       <div className=" rounded-2xl py-3 bg-[#FAFAFA]">
         <div className="px-5 lg:px-6 py-3 lg:py-4 flex items-center justify-between relative">
           {/* ========== MOBILE LEFT (Hamburger) ========== */}
@@ -36,7 +36,7 @@ const Navbar = () => {
           </Link>
 
           {/* ========== RIGHT SIDE ========== */}
-          <div className="flex items-center gap-7 text-gray-700">
+          <div className="flex items-center gap-3 lg:gap-7 text-gray-700">
             {/* Desktop Search */}
             <Search className="hidden md:block w-5 h-5 cursor-pointer hover:text-black transition" />
 

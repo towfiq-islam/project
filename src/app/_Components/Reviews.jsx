@@ -35,7 +35,7 @@ const reviews = [
 
 export function Reviews() {
   return (
-    <section className="container mx-auto px-4 sm:px-6 lg:px-8 py-10 lg:py-20">
+    <section className="container mx-auto px-4 md:px-7 lg:px-10 xl:px-16 2xl:px-16 py-10 lg:py-20">
       {/* Header */}
       <div className="flex items-end justify-between mb-7 lg:mb-10">
         <Heading text="Reviews" Variant="h3" />
