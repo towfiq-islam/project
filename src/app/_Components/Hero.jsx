@@ -16,14 +16,14 @@ export function Hero() {
         <Image src={heroImg} alt="hero_img" unoptimized className="w-full" />
       </figure>
 
-      <div className="relative rounded-3xl overflow-hidden h-[450px] lg:h-[750px]">
+      <div className="relative rounded-3xl overflow-hidden h-[450px] lg:h-[700px]">
         {/* Main Image */}
         <Image
           src={activeImage}
           alt="Nike Air Max"
           fill
           unoptimized
-          className="object-cover"
+          className="object-cover rounded-3xl"
         />
 
         {/* Vertical Badge */}

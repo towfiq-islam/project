@@ -46,7 +46,7 @@ export default function CartPage() {
       <div className="container mx-auto px-4 md:px-7 lg:px-10 xl:px-16 2xl:px-16 py-6">
         <button
           onClick={() => router.push("/")}
-          className="flex items-center gap-2 cursor-pointer text-gray-600 hover:text-gray-900 mb-6"
+          className="flex items-center gap-2 cursor-pointer text-gray-600 hover:text-gray-900 mt-5 lg:mt-7 mb-6"
         >
           <ChevronLeft className="w-5 h-5" />
           Continue shopping
@@ -74,7 +74,7 @@ export default function CartPage() {
                 {items.map(item => (
                   <div
                     key={item.id}
-                    className="flex gap-4 p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors"
+                    className="flex gap-4 p-4 border border-gray-200 rounded-lg hover:bg-gray-100 transition-colors"
                   >
                     <div className="w-24 h-24 bg-gray-100 rounded-lg overflow-hidden flex-shrink-0">
                       <img

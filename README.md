@@ -1,4 +1,4 @@
-# Project Name : Zavisoft Frontend Task (KICKS)
+# Zavisoft Frontend Task (KICKS)
 
 ## 1. Description:
 
