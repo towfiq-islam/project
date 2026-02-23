@@ -14,16 +14,6 @@ body {
   @apply font-rubik bg-background text-secondary-black;
 }
 
-/* Custom CSS */
-
-.section_title {
-  @apply text-xl;
-}
-
-.section_description {
-  @apply text-base;
-}
-
 .swiper-pagination-bullet-active-main,
 .swiper-pagination-bullet-active-prev,
 .swiper-pagination-bullet-active-next {

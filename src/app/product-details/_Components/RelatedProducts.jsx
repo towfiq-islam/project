@@ -15,14 +15,12 @@ const RelatedProducts = ({ relatedProducts }) => {
   const [swiperInstance, setSwiperInstance] = useState(null);
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  // Update disabled state when slide changes
   const isPrevDisabled = currentIndex === 0;
   const isNextDisabled = swiperInstance
     ? currentIndex >=
       swiperInstance.slides.length - swiperInstance.params.slidesPerView
     : true;
 
-  // Swiper navigation initialization after refs are set
   useEffect(() => {
     if (swiperInstance) {
       swiperInstance.params.navigation.prevEl = prevRef.current;

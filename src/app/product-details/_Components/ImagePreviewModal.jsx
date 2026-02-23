@@ -3,7 +3,6 @@ import { useEffect } from "react";
 import { X } from "lucide-react";
 
 export default function ImagePreviewModal({ isOpen, image, onClose }) {
-  // Close on ESC key
   useEffect(() => {
     const handleEsc = e => {
       if (e.key === "Escape") onClose();

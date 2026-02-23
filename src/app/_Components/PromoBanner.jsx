@@ -8,11 +8,11 @@ export function PromoBanner() {
         <div className="flex flex-col lg:flex-row justify-between items-center gap-10">
           {/* Left Content */}
           <div className="text-gray-50 max-w-xl">
-            <h2 className="text-3xl sm:text-5xl font-semibold leading-tight">
+            <h2 className="text-[28px] sm:text-5xl font-semibold leading-tight">
               JOIN OUR KICKSPLUS
             </h2>
 
-            <h3 className="text-3xl sm:text-5xl font-bold mb-2 lg:mb-4">
+            <h3 className="text-[28px] sm:text-5xl font-bold mb-2 lg:mb-4">
               CLUB & GET 15% OFF
             </h3>
 
@@ -25,10 +25,10 @@ export function PromoBanner() {
               <input
                 type="email"
                 placeholder="Email address"
-                className="flex-1 px-4 py-3 bg-transparent rounded-lg border border-gray-300 text-gray-50 outline-none"
+                className="flex-1 px-3 lg:px-4 py-2.5 lg:py-3 bg-transparent rounded-lg border border-gray-300 text-gray-50 outline-none"
               />
 
-              <button className="bg-secondary-black px-6 py-3.5 text-sm font-semibold hover:bg-black border border-secondary-black cursor-pointer transition rounded-lg">
+              <button className="bg-secondary-black px-4 lg:px-6 py-3 lg:py-3.5 text-sm font-semibold hover:bg-black border border-secondary-black cursor-pointer transition rounded-lg">
                 SUBMIT
               </button>
             </div>

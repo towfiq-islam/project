@@ -24,13 +24,11 @@ export function NewDrops() {
         );
 
         setProducts(data || []);
-
-        // Fix: mark last page if fewer products returned than limit
         setIsLastPage(!data || data.length < limit);
       } catch (error) {
         console.error("Failed to fetch products:", error);
         setProducts([]);
-        setIsLastPage(true); // treat as last page if fetch fails
+        setIsLastPage(true);
       } finally {
         setLoading(false);
       }
