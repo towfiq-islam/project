@@ -1,4 +1,4 @@
-# Aura Chat - Modern Realtime Messenger & SaaS Landing Page
+# Aura Chat - Modern Realtime Messenger
 
 A production-quality frontend application built with **Next.js 16+ (App Router)**, **TypeScript**, and **Tailwind CSS v4**. This project integrates a high-performance chat system connected to live REST and WebSockets endpoints, alongside a creative SaaS product introduction landing page.
 
