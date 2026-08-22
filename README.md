@@ -10,7 +10,7 @@ Aura Chat is designed to showcase modern messenger aesthetics (similar to Telegr
 
 ---
 
-## ⚡ Tech Stack
+## Tech Stack
 
 - **Framework**: Next.js 16 (App Router with React Server Components)
 - **Styling**: Tailwind CSS v4
@@ -22,7 +22,7 @@ Aura Chat is designed to showcase modern messenger aesthetics (similar to Telegr
 
 ---
 
-## 🌟 Key Features
+## Key Features
 
 1. **Passwordless Auth**: Single-step E.164 phone authentication. Registrations are automatically created for new numbers.
 2. **Global Directory Search**: Real-time debounced queries search the backend for other registered users by phone or name.
@@ -35,7 +35,7 @@ Aura Chat is designed to showcase modern messenger aesthetics (similar to Telegr
 
 ---
 
-## 🚀 Installation & Running Locally
+## Installation & Running Locally
 
 ### Prerequisites
 - Node.js (v18.0.0 or higher, Node 24 recommended)
@@ -71,7 +71,7 @@ npm run start
 
 ---
 
-## 📐 Architecture
+## Architecture
 
 A **feature-based folder structure** is used inside the `src/` directory to separate concerns:
 
@@ -96,7 +96,7 @@ src/
 
 ---
 
-## 📝 API Documentation Summary
+## API Documentation Summary
 
 The API leverages standard REST endpoints along with Socket.io messages:
 - **Auth**: `POST /auth/login` (login/register), `GET /auth/me` (profile check)
