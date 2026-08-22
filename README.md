@@ -4,7 +4,7 @@ A production-quality frontend application built with **Next.js 16+ (App Router)*
 
 ---
 
-## 📖 Project Overview
+## Project Overview
 
 Aura Chat is designed to showcase modern messenger aesthetics (similar to Telegram and Discord) with strong engineering underpinnings. The app supports seamless phone-number authentication, real-time message exchange via WebSockets, group channels with admin governance, infinite cursor history pagination, and smart viewport scroll behavior.
 
